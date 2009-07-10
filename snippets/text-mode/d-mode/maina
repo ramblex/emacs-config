@@ -1,0 +1,6 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+int main(char[][] args) {
+	$1
+	return 0;
+}

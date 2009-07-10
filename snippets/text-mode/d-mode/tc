@@ -1,0 +1,7 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+try {
+	$2
+} catch (${1:Exception} e) {
+	$0
+}

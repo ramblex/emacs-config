@@ -1,0 +1,3 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+private static final ${1:char[]} ${2:name} = ${4:"${3:value}"};

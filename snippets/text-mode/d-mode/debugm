@@ -1,0 +1,5 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+debug(${1:${TM_FILENAME/(.*?)(\..+)/$1/}}) {
+	$0
+}

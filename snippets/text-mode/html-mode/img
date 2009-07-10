@@ -1,0 +1,4 @@
+#contributor : Jimmy Wu <frozenthrone88@gmail.com>
+#name : <img src="..." class="..." alt="..." />
+# --
+<%= image_tag ${1:src}$0 %>

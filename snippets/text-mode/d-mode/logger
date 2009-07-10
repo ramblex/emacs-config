@@ -1,0 +1,9 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+import tango.util.log.Log, tango.util.log.Configurator;
+
+protected static Logger log = null;
+static this() {
+	log = Log.getLogger(${1:__FILE__});${2:
+	//log.setLevel(log.Level.${3:Info});}
+}

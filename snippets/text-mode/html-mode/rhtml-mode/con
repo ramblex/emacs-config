@@ -1,0 +1,5 @@
+#name : <% content_for :$0 do %> ... <% end %>
+# --
+<% content_for :${1:section} do %>
+$0
+<% end %>

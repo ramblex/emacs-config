@@ -1,0 +1,5 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+elements.each(${1:"${2://XPath}"}) do |${3:node}|
+	$0
+end

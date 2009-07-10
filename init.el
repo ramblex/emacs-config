@@ -1,3 +1,9 @@
+;;; init.el --- Where everything begins
+;;
+;; Adapted from Emacs starter kit
+;;
+;; This is called from .emacs
+
 ;; Load paths
 (setq dotfiles-dir (file-name-directory
       (or (buffer-file-name) load-file-name)))
@@ -18,4 +24,17 @@
 (require 'uniquify)
 (require 'ansi-color)
 (require 'recentf)
+
+;; Load up custom stuff
+
+(require 'bindings)
+(require 'misc)
+(require 'yasnippet-setup)
+
+;; System specific stuff
+
+(setq system-specific-config (concat dotfiles-dir system-name ".el"))
+(if (file-exists-p system-specific-config) (load system-specific-config))
+
+;;; init.el ends here
 

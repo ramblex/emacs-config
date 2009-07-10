@@ -1,0 +1,7 @@
+# This was cloned from a TextMate bundle for yasnippet.
+# --
+if ${1:condition}
+	$2
+else
+	$3
+end
