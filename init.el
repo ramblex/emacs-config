@@ -14,7 +14,6 @@
 (setq custom-file (concat dotfiles-dir "custom.el"))
 (setq package-user-dir (concat dotfiles-dir "/vendor"))
 
-
 ;; These should be loaded on startup rather than autoloaded on demand
 ;; since they are likely to be used in every session
 
@@ -31,6 +30,7 @@
 (require 'misc)
 (require 'yasnippet-setup)
 (require 'rails-setup)
+(require 'ecb-setup)
 
 ;; System specific stuff
 

@@ -10,6 +10,8 @@
 (setq inhibit-startup-message t)
 
 (menu-bar-mode -1)
+(line-number-mode 1)
+(column-number-mode 1)
 
 (show-paren-mode 1)
 
