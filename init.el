@@ -28,9 +28,13 @@
 
 (require 'bindings)
 (require 'misc)
+(require 'defuns)
 (require 'yasnippet-setup)
 (require 'rails-setup)
 (require 'ecb-setup)
+;(require 'color-theme-setup)
+
+(load custom-file 'noerror)
 
 ;; System specific stuff
 
@@ -38,4 +42,3 @@
 (if (file-exists-p system-specific-config) (load system-specific-config))
 
 ;;; init.el ends here
-
