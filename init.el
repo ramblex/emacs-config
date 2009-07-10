@@ -11,7 +11,7 @@
 (add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
-(setq customf-file (concat dotfiles-dir "custom.el"))
+(setq custom-file (concat dotfiles-dir "custom.el"))
 (setq package-user-dir (concat dotfiles-dir "/vendor"))
 
 
@@ -30,6 +30,7 @@
 (require 'bindings)
 (require 'misc)
 (require 'yasnippet-setup)
+(require 'rails-setup)
 
 ;; System specific stuff
 
