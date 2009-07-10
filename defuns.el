@@ -20,4 +20,15 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
 		  (t (error "%s" "Not on a paren, brace, or bracket"))))
 )
 
+(defun sudo-edit (&optional arg)
+  (interactive "p")
+  (if arg
+      (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(defun recompile-init ()
+  "Byte-compile all your dotfiles again."
+  (interactive)
+  (byte-recompile-directory dotfiles-dir 0))
+
 (provide 'defuns)
