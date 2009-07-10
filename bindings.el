@@ -12,7 +12,4 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
-;; Jump to a definition in the current file
-(global-set-key (kbd "C-x C-i") 'ido-imenu)
-
 (provide 'bindings)
