@@ -1,0 +1,6 @@
+[submodule "vendor/rinari"]
+	path = vendor/rinari
+	url = git://github.com/technomancy/rinari.git
+[submodule "vendor/rhtml"]
+	path = vendor/rhtml
+	url = git://github.com/eschulte/rhtml.git
