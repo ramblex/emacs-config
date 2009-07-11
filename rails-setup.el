@@ -5,6 +5,8 @@
 (require 'rhtml-mode)
 (add-hook 'rhtml-mode-hook 'rinari-launch)
 
+(add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
+
 (defvar ruby-rails-functions 
   '("add_column"
     "after_create"
