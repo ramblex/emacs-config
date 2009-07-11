@@ -8,20 +8,19 @@
 
 (global-font-lock-mode t)
 (setq inhibit-startup-message t)
-
 (menu-bar-mode -1)
 (line-number-mode 1)
 (column-number-mode 1)
-
 (show-paren-mode 1)
-
 (ido-mode t)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
       ido-use-filename-at-point t
       ido-max-prospects 10)
-
+(add-hook 'ido-setup-hook
+	  (lambda ()
+	    (define-key ido-completion-map [tab] 'ido-complete)))
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
 (set-default 'imenu-auto-rescan t)
@@ -34,5 +33,17 @@
 
 (setq backup-directory-alist `(("." . ,(expand-file-name
 					(concat dotfiles-dir "backups")))))
+
+;; Hippie expand
+(setq hippie-expand-try-functions-list
+      '(yas/hippie-try-expand
+        try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+ 	try-expand-dabbrev-from-kill
+ 	try-complete-file-name-partially
+ 	try-complete-file-name
+ 	try-complete-lisp-symbol-partially
+ 	try-complete-lisp-symbol
+ 	indent-for-tab-command))
 
 (provide 'misc)
