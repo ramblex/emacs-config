@@ -32,7 +32,7 @@
 (require 'alex-tab-complete)
 (require 'alex-rails)
 (require 'alex-ecb)
-;(require 'alex-color-theme-setup)
+(require 'alex-color-theme)
 
 (load custom-file 'noerror)
 

@@ -14,9 +14,9 @@
      (highlight ((t (:background "#4b4b4b"))))
      (fringe ((t (:background "#2b2b2b"))))
      (show-paren-match-face ((t (:foreground "#f6f3e8" :background "#857b6f"))))
-     (modeline ((t (:bold nil :foreground "grey80" :background "grey30" :height 95))))
-     (modeline-inactive ((t (:foreground "#777777" :background "grey30" :height 95))))
-     (modeline-buffer-id ((t (:bold nil :foreground "#ffffff" :height 95))))
+     (modeline ((t (:bold nil :foreground "grey80" :background "grey30" ))))
+     (modeline-inactive ((t (:foreground "#777777" :background "grey30" ))))
+     (modeline-buffer-id ((t (:bold nil :foreground "#ffffff" ))))
      (minibuffer-prompt ((t (:bold t :foreground "#708090"))))
      (font-lock-builtin-face ((t (:foreground "#8ac6f2"))))
      (font-lock-comment-face ((t (:italic t :foreground "#bc9458"))))
@@ -39,12 +39,12 @@
      (erb-face ((t (:background "#242424"))))
      (ecb-default-highlight-face ((t (:background "#5a647e"
                                                   :foreground "#f6f3e8"))))
-     (ecb-default-general-face ((t (:height 95))))
-     (ecb-directories-general-face ((t (:height 95))))
+     (ecb-default-general-face ((t ())))
+     (ecb-directories-general-face ((t ())))
      (yas/field-highlight-face ((t (:background "grey13"))))
      )))
 
 (color-theme-initialize)
-(color-theme-railscasts)
+;(color-theme-railscasts)
 
 (provide 'alex-color-theme)
