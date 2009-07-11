@@ -1256,19 +1256,22 @@ when the condition evaluated to non-nil."
                        (list (list key template name condition group))))
 
 
-(defun yas/hippie-try-expand (first-time?)
-  "Integrate with hippie expand.  Just put this function in
-`hippie-expand-try-functions-list'."
-  (if (not first-time?)
-      (let ((yas/fallback-behavior 'return-nil))
-        (yas/expand))
-    (when (and (null (car buffer-undo-list))
-               (eq 'apply
-                   (car (cadr buffer-undo-list)))
-               (eq 'yas/undo-expand-snippet
-                   (cadr (cadr buffer-undo-list))))
-      (undo 1))
-    nil))
+;; (defun yas/hippie-try-expand (first-time?)
+;;   "Integrate with hippie expand.  Just put this function in
+;; `hippie-expand-try-functions-list'."
+;;   (if (not first-time?)
+;;       (progn
+;;         (message "yas/expand")
+;;         (let ((yas/fallback-behavior 'return-nil))
+;;           (setq yas-result (yas/expand))))
+;;     (when (and (null (car buffer-undo-list))
+;;                (eq 'apply
+;;                    (car (cadr buffer-undo-list)))
+;;                (eq 'yas/undo-expand-snippet
+;;                    (cadr (cadr buffer-undo-list))))
+;;       (undo 1))
+;;     (if (not (eq yas-result 'expanded)) 
+;;         nil)))
 
 (defun yas/expand ()
   "Expand a snippet."
@@ -1291,12 +1294,13 @@ when the condition evaluated to non-nil."
                       (progn (yas/expand-snippet start end template)
                              'expanded) ; expanded successfully
                     'interrupted))      ; interrupted by user
-              (if (eq yas/fallback-behavior 'return-nil)
-                  nil                   ; return nil
-                (let* ((yas/minor-mode nil)
-                       (command (key-binding yas/trigger-key)))
-                  (when (commandp command)
-                    (call-interactively command))))))))))
+              (hippie-expand nil)))))))
+;; (if (eq yas/fallback-behavior 'return-nil)
+;;                   nil                   ; return nil
+;;                 (let* ((yas/minor-mode nil)
+;;                        (command (key-binding yas/trigger-key)))
+;;                   (when (commandp command)
+;;                     (call-interactively command))))
 
 (defun yas/next-field-group ()
   "Navigate to next field group.  If there's none, exit the snippet."

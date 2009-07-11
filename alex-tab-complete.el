@@ -8,8 +8,7 @@
 
 ;; Hippie expand
 (setq hippie-expand-try-functions-list
-      '(yas/hippie-try-expand
-        try-expand-dabbrev
+      '(try-expand-dabbrev
         try-expand-dabbrev-all-buffers
  	try-expand-dabbrev-from-kill
  	try-complete-file-name-partially
