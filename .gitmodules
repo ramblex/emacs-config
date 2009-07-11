@@ -4,3 +4,6 @@
 [submodule "vendor/rhtml"]
 	path = vendor/rhtml
 	url = git://github.com/eschulte/rhtml.git
+[submodule "vendor/magit"]
+	path = vendor/magit
+	url = git://gitorious.org/magit/mainline.git

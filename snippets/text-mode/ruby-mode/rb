@@ -1,3 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-#!/usr/bin/env ruby${TM_RUBY_SWITCHES: -wKU}

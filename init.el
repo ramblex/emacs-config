@@ -33,6 +33,7 @@
 (require 'alex-rails)
 (require 'alex-ecb)
 (require 'alex-color-theme)
+(require 'alex-electric)
 
 (load custom-file 'noerror)
 

@@ -8,7 +8,8 @@
    '(color-theme-railscasts
      ((background-color . "#2b2b2b")
       (background-mode . dark)
-      (foreground-color . "#ffffff"))
+      (foreground-color . "#ffffff")
+      (cursor-color . "#5b5b5b"))
      (hl-line ((t (:background "#262626"))))
      (region ((t (:background "#5a647e"))))
      (highlight ((t (:background "#4b4b4b"))))
@@ -45,6 +46,6 @@
      )))
 
 (color-theme-initialize)
-;(color-theme-railscasts)
+(color-theme-railscasts)
 
 (provide 'alex-color-theme)

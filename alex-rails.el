@@ -4,6 +4,8 @@
 (add-to-list 'load-path (concat package-user-dir "/rhtml"))
 (require 'rhtml-mode)
 (add-hook 'rhtml-mode-hook 'rinari-launch)
+(add-hook 'rhtml-mode-hook 'alex-electric-mode)
+(add-hook 'ruby-mode-hook 'alex-electric-mode)
 
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 
@@ -64,7 +66,7 @@
   "Rails keywords")
 
 (defface rails-font-lock-function-face
-  '((t (:foreground "#96d157"))) 
+  '((t (:foreground "#da4939"))) 
   "Rails functions"
   :group 'rails-font-lock-faces)
 
@@ -81,5 +83,12 @@
 (font-lock-add-keywords
  'ruby-mode
  (list (rails-keywords)))
+
+(defun add-rails-keywords ()
+  (setq rhtml-in-erb-keywords
+        (append rhtml-in-erb-keywords
+                '((list (regexp-opt ruby-rails-functions 'words)
+                        2 rails-font-lock-function-face)))))
+(add-hook 'rhtml-mode-hook 'add-rails-keywords)
 
 (provide 'alex-rails)
