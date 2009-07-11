@@ -29,7 +29,7 @@
 (require 'alex-defuns)
 (require 'alex-bindings)
 (require 'alex-misc)
-(require 'alex-yasnippet)
+(require 'alex-tab-complete)
 (require 'alex-rails)
 (require 'alex-ecb)
 ;(require 'alex-color-theme-setup)
