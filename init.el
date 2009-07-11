@@ -26,9 +26,9 @@
 
 ;; Load up custom stuff
 
+(require 'defuns)
 (require 'bindings)
 (require 'misc)
-(require 'defuns)
 (require 'yasnippet-setup)
 (require 'rails-setup)
 (require 'ecb-setup)
