@@ -34,6 +34,7 @@
 (require 'alex-ecb)
 (require 'alex-color-theme)
 (require 'alex-electric)
+(require 'alex-magit)
 
 (load custom-file 'noerror)
 
