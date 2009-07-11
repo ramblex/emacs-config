@@ -31,4 +31,4 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (interactive)
   (byte-recompile-directory dotfiles-dir 0))
 
-(provide 'defuns)
+(provide 'alex-defuns)

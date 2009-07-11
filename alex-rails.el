@@ -82,4 +82,4 @@
  'ruby-mode
  (list (rails-keywords)))
 
-(provide 'rails-setup)
+(provide 'alex-rails)

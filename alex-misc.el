@@ -46,4 +46,4 @@
  	try-complete-lisp-symbol
  	indent-for-tab-command))
 
-(provide 'misc)
+(provide 'alex-misc)

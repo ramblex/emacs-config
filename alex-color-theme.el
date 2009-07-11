@@ -1,3 +1,6 @@
+(add-to-list 'load-path (concat package-user-dir "/color-theme"))
+(require 'color-theme)
+
 (defun color-theme-railscasts ()
   "A colour theme based on railscasts"
   (interactive)
@@ -41,4 +44,7 @@
      (yas/field-highlight-face ((t (:background "grey13"))))
      )))
 
-(provide 'my-color-themes)
+(color-theme-initialize)
+(color-theme-railscasts)
+
+(provide 'alex-color-theme)

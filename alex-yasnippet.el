@@ -4,4 +4,4 @@
 (yas/initialize)
 (yas/load-directory snippets-dir)
 
-(provide 'yasnippet-setup)
+(provide 'alex-yasnippet)

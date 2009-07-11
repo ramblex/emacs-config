@@ -26,13 +26,13 @@
 
 ;; Load up custom stuff
 
-(require 'defuns)
-(require 'bindings)
-(require 'misc)
-(require 'yasnippet-setup)
-(require 'rails-setup)
-(require 'ecb-setup)
-;(require 'color-theme-setup)
+(require 'alex-defuns)
+(require 'alex-bindings)
+(require 'alex-misc)
+(require 'alex-yasnippet)
+(require 'alex-rails)
+(require 'alex-ecb)
+;(require 'alex-color-theme-setup)
 
 (load custom-file 'noerror)
 
