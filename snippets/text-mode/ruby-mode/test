@@ -1,0 +1,5 @@
+# name: test do__end
+# --
+test "${1:something interesting}" do
+$> $0
+end
