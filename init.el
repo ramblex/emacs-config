@@ -35,6 +35,7 @@
 (require 'alex-color-theme)
 (require 'alex-electric)
 (require 'alex-magit)
+(require 'alex-yaml)
 
 (load custom-file 'noerror)
 

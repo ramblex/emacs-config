@@ -73,22 +73,19 @@
 (defvar rails-font-lock-function-face 'rails-font-lock-function-face 
   "Face name for rails function font")
 
-(defun rails-keywords ()
+(defun rails-keywords (level prepend?)
   (list (concat "\\(^\\|[^_:.@$]\\|\\.\\.\\)\\b\\(defined\\?\\|"
                 (regexp-opt ruby-rails-functions t)
                 "\\)"
                 ruby-keyword-end-re)
-        2 rails-font-lock-function-face))
+        level rails-font-lock-function-face (if prepend? 'prepend)))
 
 (font-lock-add-keywords
  'ruby-mode
- (list (rails-keywords)))
+ (list (rails-keywords 2 nil)))
 
-(defun add-rails-keywords ()
-  (setq rhtml-in-erb-keywords
-        (append rhtml-in-erb-keywords
-                '((list (regexp-opt ruby-rails-functions 'words)
-                        2 rails-font-lock-function-face)))))
-(add-hook 'rhtml-mode-hook 'add-rails-keywords)
+(setq rhtml-in-erb-keywords
+      (append rhtml-in-erb-keywords
+              (list (rails-keywords 1 t))))
 
 (provide 'alex-rails)
