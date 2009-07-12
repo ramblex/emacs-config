@@ -73,19 +73,32 @@
 (defvar rails-font-lock-function-face 'rails-font-lock-function-face 
   "Face name for rails function font")
 
-(defun rails-keywords (level prepend?)
-  (list (concat "\\(^\\|[^_:.@$]\\|\\.\\.\\)\\b\\(defined\\?\\|"
-                (regexp-opt ruby-rails-functions t)
-                "\\)"
-                ruby-keyword-end-re)
-        level rails-font-lock-function-face (if prepend? 'prepend)))
-
+;; TODO: find some way of only adding these only when rinari is activated
 (font-lock-add-keywords
  'ruby-mode
- (list (rails-keywords 2 nil)))
+ (list (list (concat "\\(^\\|[^_:.@$]\\|\\.\\.\\)\\b\\(defined\\?\\|"
+                     (regexp-opt ruby-rails-functions t)
+                     "\\)"
+                     ruby-keyword-end-re)
+             2 rails-font-lock-function-face)))
 
+;; Adding keywords to to RHTML mode using font-lock-add-keywords fails,
+;; use the following alternative
 (setq rhtml-in-erb-keywords
       (append rhtml-in-erb-keywords
-              (list (rails-keywords 1 t))))
+              (list (list 
+                     (concat "[^_]"
+                             (regexp-opt ruby-rails-functions 'words)
+                             "[^_]")
+                     1 rails-font-lock-function-face 'prepend)
+                    '("[^$\\?]\\(\"[^\\\"]*\\(\\\\\\(.\\|\n\\)[^\\\"]*\\)*\"\\)"
+                      . (1 font-lock-string-face prepend))
+                    '("[^$\\?]\\('[^\\']*\\(\\\\\\(.\\|\n\\)[^\\']*\\)*'\\)"
+                      . (1 font-lock-string-face prepend)))))
+
+(font-lock-add-keywords
+ 'rhtml-mode
+ '(("\\(</?\\)" 1 font-lock-function-name-face prepend)
+   ("\\(/?>\\)" 1 font-lock-function-name-face prepend)))
 
 (provide 'alex-rails)

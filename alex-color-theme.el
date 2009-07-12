@@ -14,7 +14,7 @@
      (region ((t (:background "#5a647e"))))
      (highlight ((t (:background "#4b4b4b"))))
      (fringe ((t (:background "#2b2b2b"))))
-     (show-paren-match-face ((t (:foreground "#f6f3e8" :background "#857b6f"))))
+     (show-paren-match-face ((t (:background "#75a6ab"))))
      (modeline ((t (:bold nil :foreground "grey80" :background "grey30" ))))
      (modeline-inactive ((t (:foreground "#777777" :background "grey30" ))))
      (modeline-buffer-id ((t (:bold nil :foreground "#ffffff" ))))
