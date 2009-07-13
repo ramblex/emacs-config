@@ -42,6 +42,7 @@
      )))
 
 (color-theme-initialize)
-(color-theme-railscasts)
+;; Don't start automatically - some stuff is missed out anyway
+;;(color-theme-railscasts)
 
 (provide 'alex-color-theme)
