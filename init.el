@@ -36,6 +36,7 @@
 (require 'alex-electric)
 (require 'alex-magit)
 (require 'alex-yaml)
+(require 'alex-php)
 
 (load custom-file 'noerror)
 
