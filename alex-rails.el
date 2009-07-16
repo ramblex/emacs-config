@@ -101,4 +101,9 @@
  '(("\\(</?\\)" 1 font-lock-function-name-face prepend)
    ("\\(/?>\\)" 1 font-lock-function-name-face prepend)))
 
+(font-lock-add-keywords
+ 'html-mode
+ '(("\\(</?\\)" 1 font-lock-function-name-face prepend)
+   ("\\(/?>\\)" 1 font-lock-function-name-face prepend)))
+
 (provide 'alex-rails)

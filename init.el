@@ -37,6 +37,7 @@
 (require 'alex-magit)
 (require 'alex-yaml)
 (require 'alex-php)
+(require 'alex-haml)
 
 (load custom-file 'noerror)
 
