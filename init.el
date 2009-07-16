@@ -4,6 +4,9 @@
 ;;
 ;; This is called from .emacs
 
+;; Start the emacs server...go go go!
+(server-start)
+
 ;; Load paths
 (setq dotfiles-dir (file-name-directory
       (or (buffer-file-name) load-file-name)))
