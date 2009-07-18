@@ -7,3 +7,6 @@
 [submodule "vendor/magit"]
 	path = vendor/magit
 	url = git://gitorious.org/magit/mainline.git
+[submodule "vendor/markdown"]
+	path = vendor/markdown
+	url = git://jblevins.org/git/markdown-mode.git

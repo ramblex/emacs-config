@@ -34,13 +34,14 @@
 (require 'alex-misc)
 (require 'alex-tab-complete)
 (require 'alex-rails)
-(require 'alex-ecb)
+;;(require 'alex-ecb)
 (require 'alex-color-theme)
 (require 'alex-electric)
 (require 'alex-magit)
 (require 'alex-yaml)
 (require 'alex-php)
 (require 'alex-haml)
+(require 'alex-markdown)
 
 (load custom-file 'noerror)
 
