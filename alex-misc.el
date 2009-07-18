@@ -21,12 +21,15 @@
 (add-hook 'ido-setup-hook
 	  (lambda ()
 	    (define-key ido-completion-map [tab] 'ido-complete)))
+(setq standard-indent 2)
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
 (set-default 'imenu-auto-rescan t)
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
+
+(setq css-indent-offset 2)
 
 (defvar coding-hook nil
   "Hook that gets run on activation of any programming mode.")
