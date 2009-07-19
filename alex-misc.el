@@ -29,6 +29,10 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
 
+(defun java-indent-fix ()
+  (c-set-offset 'substatement-open 0))
+(add-hook 'java-mode-hook 'java-indent-fix)
+
 (setq css-indent-offset 2)
 
 (defvar coding-hook nil

@@ -29,14 +29,17 @@
 
 ;; Load up custom stuff
 
+;; Required stuff
 (require 'alex-defuns)
 (require 'alex-bindings)
 (require 'alex-misc)
 (require 'alex-tab-complete)
+
+;; Stuff to load up when needed - modes and such like
 (require 'alex-rails)
-;;(require 'alex-ecb)
-(require 'alex-color-theme)
+;;(autoload 'alex-ecb)
 (require 'alex-electric)
+(require 'alex-color-theme)
 (require 'alex-magit)
 (require 'alex-yaml)
 (require 'alex-php)
