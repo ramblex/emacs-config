@@ -41,6 +41,57 @@
      (yas/field-highlight-face ((t (:background "grey13"))))
      )))
 
+(defun color-theme-eclips3 ()
+  "Nicked from eclips3.media tmTheme"
+  (interactive)
+  (color-theme-install
+   '(color-theme-eclips3
+     ((background-color . "#1d1d1d")
+      (foreground-color . "#e6e1de")
+      (cursor . "#ffffff"))
+     (region ((t (:background "#5a647e"))))
+     (font-lock-comment-face ((t (:foreground "#383838"
+                                              :background "#202020"
+                                              :italic t))))
+     (font-lock-keyword-face ((t (:foreground "#69a1ff"))))
+     (font-lock-function-name-face ((t (:foreground "#ff00ac" 
+                                                    :italic t))))
+     (font-lock-variable-name-face ((t (:foreground "#c9ceff"))))
+     (font-lock-constant-face ((t (:foreground "#6d9cbe"))))
+     (font-lock-builtin-face ((t (:foreground "#6e9cbe"))))
+     (font-lock-string-face ((t (:foreground "#a5c261"))))
+     (erb-face ((t (:background "#161616"))))
+     (erb-delim-face ((t (:normal t :foreground "#ffffff" :background "#161616"))))
+     (erb-exec-delim-face ((t (:normal t :foreground "#ffffff" :background "#161616"))))
+     (erb-out-delim-face ((t (:normal t :foreground "#ffffff" :background "#161616"))))
+     )))
+
+(defun color-theme-minimal ()
+  "Nicked from minimal tmTheme"
+  (interactive)
+  (color-theme-install
+   '(color-theme-minimal
+     ((background-color . "#302d26")
+      (foreground-color . "#fcffe0")
+      (cursor-color . "Orange1"))
+     (hl-line ((t (:background "#232826"))))
+     (region ((t (:background "#180024"))))
+     (font-lock-comment-face ((t (:foreground "#706d5b"
+                                              :italic t))))
+     (font-lock-keyword-face ((t (:foreground "#949c8b"))))
+     (font-lock-function-name-face ((t (:foreground "#786800"))))
+     (font-lock-variable-name-face ((t (:foreground "#d1a796"))))
+     (font-lock-constant-face ((t (:foreground "peru"))))
+     (font-lock-type-face ((t (:foreground "#cccc66"))))
+     (font-lock-builtin-face ((t (:foreground "peru"))))
+     (font-lock-string-face ((t (:foreground "#cc9999"))))
+     (erb-face ((t (:background "#d9d59f"))))
+     (erb-delim-face ((t (:normal t :foreground "#ffffff" :background "#d9d59f"))))
+     (erb-exec-delim-face ((t (:normal t :foreground "#ffffff" :background "#d9d59f"))))
+     (erb-out-delim-face ((t (:normal t :foreground "#ffffff" :background "#d9d59f"))))
+     (rails-font-lock-function-face ((t (:foreground "#999933"))))
+     )))
+
 (color-theme-initialize)
 ;; Don't start automatically - some stuff is missed out anyway
 ;;(color-theme-railscasts)
