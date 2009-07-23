@@ -37,7 +37,6 @@
 
 ;; Stuff to load up when needed - modes and such like
 (require 'alex-rails)
-;;(autoload 'alex-ecb)
 (require 'alex-electric)
 (require 'alex-color-theme)
 (require 'alex-magit)
