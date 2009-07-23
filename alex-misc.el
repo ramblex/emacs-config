@@ -33,6 +33,10 @@
   (c-set-offset 'substatement-open 0))
 (add-hook 'java-mode-hook 'java-indent-fix)
 
+(defun c++-indent-fix ()
+  (c-set-offset 'inline-open 0))
+(add-hook 'c++-mode-hook 'c++-indent-fix)
+
 (add-to-list 'auto-mode-alist '("\\.lex$" . c++-mode))
 
 (setq css-indent-offset 2)
