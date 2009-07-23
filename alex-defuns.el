@@ -31,4 +31,10 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (interactive)
   (byte-recompile-directory dotfiles-dir 0))
 
+(defun my-ecb-activate ()
+  "Start up ECB"
+  (interactive)
+  (require 'alex-ecb)
+  (ecb-activate))
+
 (provide 'alex-defuns)
