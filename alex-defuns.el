@@ -31,6 +31,11 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (interactive)
   (byte-recompile-directory dotfiles-dir 0))
 
+(defun large-width ()
+  "The perfect size for having two windows side by side"
+  (interactive)
+  (modify-all-frames-parameters '((width . 166))))
+
 (defun my-ecb-activate ()
   "Start up ECB"
   (interactive)
