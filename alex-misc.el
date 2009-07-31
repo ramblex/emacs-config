@@ -38,6 +38,9 @@
 (add-hook 'c++-mode-hook 'c++-indent-fix)
 
 (add-to-list 'auto-mode-alist '("\\.lex$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.ll$" . c++-mode))
+(add-to-list 'auto-mode-alist '("README$" . text-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 (setq css-indent-offset 2)
 

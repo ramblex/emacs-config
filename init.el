@@ -34,8 +34,6 @@
 (require 'alex-bindings)
 (require 'alex-misc)
 (require 'alex-tab-complete)
-
-;; Stuff to load up when needed - modes and such like
 (require 'alex-rails)
 (require 'alex-electric)
 (require 'alex-color-theme)
@@ -44,6 +42,7 @@
 (require 'alex-php)
 (require 'alex-haml)
 (require 'alex-markdown)
+(require 'alex-bison)
 
 (load custom-file 'noerror)
 
