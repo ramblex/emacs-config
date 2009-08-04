@@ -44,6 +44,10 @@
 
 (setq css-indent-offset 2)
 
+;; Turn off the annoying shit in VHDL
+(setq vhdl-electric-mode nil)
+(setq vhdl-stutter-mode nil)
+
 (defvar coding-hook nil
   "Hook that gets run on activation of any programming mode.")
 
