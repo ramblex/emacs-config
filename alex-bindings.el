@@ -1,6 +1,6 @@
 (global-set-key "\C-c\C-k" 'copy-line)
-(global-set-key [f7] 'recompile)
-(global-set-key [f8] 'mode-compile)
+(global-set-key "\C-c7" 'recompile)
+(global-set-key "\C-c8" 'compile)
 (global-set-key [f10] 'next-error)
 (global-set-key [f11] 'previous-error)
 (global-set-key (kbd "M-[") 'backward-paragraph)
