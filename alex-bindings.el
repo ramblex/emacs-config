@@ -14,5 +14,6 @@
 (global-set-key "\C-xg" 'magit-status)
 (global-set-key "\C-c\t" 'magit-toggle-section)
 (global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
+(global-set-key "\C-c9" 'revert-buffer)
 
 (provide 'alex-bindings)
