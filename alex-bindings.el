@@ -13,7 +13,9 @@
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 (global-set-key "\C-xg" 'magit-status)
 (global-set-key "\C-c\t" 'magit-toggle-section)
-(global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
+;;(global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
 (global-set-key "\C-c9" 'revert-buffer)
+
+(global-set-key "\C-x7" 'run-fproject-tests)
 
 (provide 'alex-bindings)
