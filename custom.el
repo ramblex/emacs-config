@@ -5,6 +5,7 @@
   ;; If there is more than one, they won't work right.
  '(c-basic-offset 2)
  '(c-default-style (quote ((java-mode . "java") (other . "k&r"))))
+ '(default-major-mode (quote org-mode))
  '(ecb-layout-name "right1")
  '(ecb-layout-window-sizes (quote (("right1" (0.3333333333333333 . 0.275) (0.3333333333333333 . 0.35) (0.3333333333333333 . 0.35)))))
  '(ecb-options-version "2.40")
