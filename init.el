@@ -44,6 +44,7 @@
 (require 'alex-markdown)
 (require 'alex-bison)
 (require 'alex-colours)
+(require 'alex-org)
 
 (load custom-file 'noerror)
 
