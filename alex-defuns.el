@@ -47,6 +47,6 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
 (defun run-fproject-tests ()
   "Run tests for final year project"
   (interactive)
-  (compile "cd /Users/alexduller/project/sim/test/; ./run_tests.rb"))
+  (compile "cd /Users/alexduller/project/bsisim/test/; ./run_tests.rb"))
 
 (provide 'alex-defuns)
