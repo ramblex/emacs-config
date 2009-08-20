@@ -38,6 +38,12 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (if (one-window-p)
       (split-window-horizontally)))
 
+(defun normal-window ()
+  "Change to only one window of width 80"
+  (interactive)
+  (modify-all-frames-parameters '((width . 80) (height . 46)))
+  (delete-other-windows))
+
 (defun my-ecb-activate ()
   "Start up ECB"
   (interactive)
