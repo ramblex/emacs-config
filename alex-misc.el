@@ -26,6 +26,7 @@
 (set-default 'indicate-empty-lines t)
 (set-default 'imenu-auto-rescan t)
 (setq ring-bell-function (lambda () t))
+(setq-default fill-column 79)
 
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (add-hook 'text-mode-hook 'turn-on-flyspell)
