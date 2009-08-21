@@ -34,14 +34,14 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
 (defun side-by-side ()
   "The perfect size for having two windows side by side"
   (interactive)
-  (modify-all-frames-parameters '((width . 166) (height . 46)))
+  (modify-frame-parameters (selected-frame) '((width . 166) (height . 46)))
   (if (one-window-p)
       (split-window-horizontally)))
 
 (defun normal-window ()
   "Change to only one window of width 80"
   (interactive)
-  (modify-all-frames-parameters '((width . 80) (height . 46)))
+  (modify-frame-parameters (selected-frame) '((width . 80) (height . 46)))
   (delete-other-windows))
 
 (defun my-ecb-activate ()
