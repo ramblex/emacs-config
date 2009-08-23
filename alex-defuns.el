@@ -55,4 +55,9 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (interactive)
   (compile "cd /Users/alexduller/project/bsisim/test/; ./run_tests.rb"))
 
+(defun generate-etags ()
+  "Generate etags for the current directory"
+  (interactive)
+  (shell-command "find . -name \"*.[ch]*\" -print | etags -"))
+
 (provide 'alex-defuns)
