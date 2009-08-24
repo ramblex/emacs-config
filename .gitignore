@@ -1,6 +1,7 @@
 *before_ecb*
 *~
 loaddefs.el*
+\#*
 backups/*
 auto-save-list
 *elc
