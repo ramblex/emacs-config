@@ -60,4 +60,9 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (interactive)
   (shell-command "find . -name \"*.[ch]*\" -print | etags -"))
 
+(defun file-name-sans-ext ()
+  "Return the current file name without extension"
+  (substring (file-name-nondirectory (buffer-file-name)) 
+ 0 (string-match "\\." (file-name-nondirectory (buffer-file-name)))))
+
 (provide 'alex-defuns)

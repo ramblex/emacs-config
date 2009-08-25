@@ -1,15 +1,16 @@
 #name : topcoder
 # --
-#include <iostream>
 #include <algorithm>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <set>
+#include <fstream>
+#include <iostream>
+#include <list>
 #include <map>
 #include <math.h>
-#include <list>
+#include <set>
+#include <sstream>
 #include <stack>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -22,10 +23,10 @@ using namespace std;
 
 typedef vector<int> VI;
 
-class ${1:`Filename('$1', 'name')`}
+class ${1:`(file-name-sans-ext)`}
 {
 public:
-  ${2}
+$> $0
 private:
 };
 
