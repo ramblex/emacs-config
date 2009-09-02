@@ -50,9 +50,6 @@
 (setq vhdl-electric-mode nil)
 (setq vhdl-stutter-mode nil)
 
-(defvar coding-hook nil
-  "Hook that gets run on activation of any programming mode.")
-
 (setq backup-directory-alist `(("." . ,(expand-file-name
 					(concat dotfiles-dir "backups")))))
 
