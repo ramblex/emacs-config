@@ -4,6 +4,8 @@
 ;;
 ;; This is called from .emacs
 
+(defvar *emacs-load-start* (current-time))
+
 ;; Start the emacs server...go go go!
 (server-start)
 
@@ -35,16 +37,13 @@
 (require 'alex-misc)
 (require 'alex-tab-complete)
 (require 'alex-rails)
-(require 'alex-electric)
-;(require 'alex-color-theme)
 (require 'alex-magit)
 (require 'alex-yaml)
 (require 'alex-php)
-(require 'alex-haml)
-(require 'alex-markdown)
 (require 'alex-bison)
 (require 'alex-colours)
 (require 'alex-org)
+(require 'alex-compilation)
 
 (load custom-file 'noerror)
 
@@ -52,5 +51,8 @@
 
 (setq system-specific-config (concat dotfiles-dir system-name ".el"))
 (if (file-exists-p system-specific-config) (load system-specific-config))
+
+(message "emacs loaded in %ds" (destructuring-bind (hi lo ms) (current-time)
+                           (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
 
 ;;; init.el ends here
