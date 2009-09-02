@@ -50,11 +50,6 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (require 'alex-ecb)
   (ecb-activate))
 
-(defun run-fproject-tests ()
-  "Run tests for final year project"
-  (interactive)
-  (compile "cd /Users/alexduller/project/bsisim/test/; ./run_tests.rb"))
-
 (defun generate-etags ()
   "Generate etags for the current directory"
   (interactive)
@@ -64,5 +59,23 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   "Return the current file name without extension"
   (substring (file-name-nondirectory (buffer-file-name)) 
  0 (string-match "\\." (file-name-nondirectory (buffer-file-name)))))
+
+;; Final year project stuff
+(require 'comint)
+(defconst *ruby* "/usr/bin/ruby")
+(defconst *tests*
+  (expand-file-name "~/project/bsisim/test/run_tests.rb"))
+
+(defun my-run-tests ()
+  "Run final year project tests using comint"
+  (interactive)
+  (apply 'make-comint "Tests" *ruby* nil (list *tests*))
+  (switch-to-buffer-other-window "*Tests*"))
+
+(defun run-fproject-tests ()
+  "Run tests for final year project"
+  (interactive)
+  (compile 
+   "cd /Users/alexduller/project/bsisim/test/; ./run_tests.rb --no-colours"))
 
 (provide 'alex-defuns)
