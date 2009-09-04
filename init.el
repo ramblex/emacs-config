@@ -44,6 +44,7 @@
 (require 'alex-colours)
 (require 'alex-org)
 (require 'alex-compilation)
+(require 'alex-films)
 
 (load custom-file 'noerror)
 
