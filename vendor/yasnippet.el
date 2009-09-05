@@ -674,7 +674,9 @@ will be deleted before inserting template."
       (narrow-to-region start start)
 
       (setq buffer-undo-list t) ;; disable undo for a short while
-      (insert template)
+      (if (string= "\n" (substring template -1 nil))
+          (insert (substring template 0 -1))
+        (insert template))
 
       ;; Step 1: do necessary indent
       (when yas/indent-line
