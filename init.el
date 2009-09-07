@@ -29,8 +29,6 @@
 (require 'ansi-color)
 (require 'recentf)
 
-;; Load up custom stuff
-
 ;; Required stuff
 (require 'alex-defuns)
 (require 'alex-bindings)
@@ -38,13 +36,14 @@
 (require 'alex-tab-complete)
 (require 'alex-rails)
 (require 'alex-magit)
-(require 'alex-yaml)
-(require 'alex-php)
-(require 'alex-bison)
-(require 'alex-colours)
 (require 'alex-org)
 (require 'alex-compilation)
-(require 'alex-films)
+
+;; Stuff not required on start-up
+(autoload 'films-list "alex-films" "List films on TV" t)
+(autoload 'yaml-mode "alex-yaml" "YAML editing mode" t)
+(autoload 'php-mode "php-mode" "PHP editing mode" t)
+(autoload 'bison-mode "alex-bison" "Bison editing mode" t)
 
 (load custom-file 'noerror)
 

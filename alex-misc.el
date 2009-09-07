@@ -28,8 +28,8 @@
 (setq ring-bell-function (lambda () t))
 (setq-default fill-column 79)
 
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook 'turn-on-flyspell)
+;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+;; (add-hook 'text-mode-hook 'turn-on-flyspell)
 
 (defun java-indent-fix ()
   (c-set-offset 'substatement-open 0))

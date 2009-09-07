@@ -64,7 +64,7 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
 (require 'comint)
 (defconst *ruby* "/usr/bin/ruby")
 (defconst *tests*
-  (expand-file-name "~/project/bsisim/test/run_tests.rb"))
+  (expand-file-name "~/project/simgen/test/run_tests.rb"))
 
 (defun my-run-tests ()
   "Run final year project tests using comint"
@@ -76,6 +76,6 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   "Run tests for final year project"
   (interactive)
   (compile 
-   "cd /Users/alexduller/project/bsisim/test/; ./run_tests.rb --no-colours"))
+   "cd /Users/alexduller/project/simgen/test/; ./run_tests.rb --no-colours"))
 
 (provide 'alex-defuns)

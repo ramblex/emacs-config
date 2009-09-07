@@ -73,6 +73,10 @@
 (defvar rails-font-lock-function-face 'rails-font-lock-function-face 
   "Face name for rails function font")
 
+(set-face-background 'erb-out-face "#fff7f2")
+(set-face-background 'erb-exec-face "#fff7f2")
+(set-face-foreground 'rails-font-lock-function-face "#ff589b")
+
 ;; TODO: find some way of only adding these only when rinari is activated
 (font-lock-add-keywords
  'ruby-mode
