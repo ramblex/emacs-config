@@ -6,7 +6,7 @@
 
 (setq yas/fallback-behavior 'run-hooks)
 (defun run-hippie-expand ()
-  (hippie-expand nil))
+  (ignore-errors (hippie-expand nil)))
 (add-hook 'yas/snippet-not-found-hook 'run-hippie-expand)
 
 ;; Hippie expand

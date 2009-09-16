@@ -1,0 +1,7 @@
+#name : vector iterator
+# --
+${1:vector}<${2:int}>::iterator ${3:it} = ${4:myvec}.begin();
+for ( ; $3 != $4.end(); ++$3)
+{
+$> $0
+}
