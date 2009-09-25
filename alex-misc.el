@@ -16,7 +16,6 @@
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
-      ido-use-filename-at-point t
       ido-max-prospects 10)
 (add-hook 'ido-setup-hook
 	  (lambda ()
@@ -34,15 +33,6 @@
 (defun java-indent-fix ()
   (c-set-offset 'substatement-open 0))
 (add-hook 'java-mode-hook 'java-indent-fix)
-
-(defun c++-indent-fix ()
-  (c-set-offset 'inline-open 0))
-(add-hook 'c++-mode-hook 'c++-indent-fix)
-
-(add-to-list 'auto-mode-alist '("\\.lex$" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.ll$" . c++-mode))
-(add-to-list 'auto-mode-alist '("README$" . text-mode))
-(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 (setq css-indent-offset 2)
 

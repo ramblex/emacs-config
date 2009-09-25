@@ -38,12 +38,13 @@
 (require 'alex-magit)
 (require 'alex-org)
 (require 'alex-compilation)
+(require 'alex-c-mode)
+(require 'alex-bison)
 
 ;; Stuff not required on start-up
 (autoload 'films-list "alex-films" "List films on TV" t)
 (autoload 'yaml-mode "alex-yaml" "YAML editing mode" t)
 (autoload 'php-mode "php-mode" "PHP editing mode" t)
-(autoload 'bison-mode "alex-bison" "Bison editing mode" t)
 
 (load custom-file 'noerror)
 
