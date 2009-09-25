@@ -5,7 +5,9 @@
   (c-add-language 'bison-mode 'c++-mode)
   (c-set-offset 'topmost-intro '++))
 
+(provide 'bison-mode)
+
+;;(autoload 'bison-mode "alex-bison" "Bison editing mode" t)
 (add-to-list 'auto-mode-alist '("\\.yy$" . bison-mode))
 
-(provide 'bison-mode)
 (provide 'alex-bison)
