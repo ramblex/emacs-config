@@ -16,12 +16,12 @@ using namespace std;
 
 #define FOR(i, a, b) for (unsigned int i = a; i < b; ++i)
 #define REP(i, N) for (unsigned int i = 0; i < N; ++i)
-
 #define pb push_back
 #define ALL(V) V.begin(), V.end()
 #define SIZE(A) A.size()
 
 typedef vector<int> VI;
+typedef vector<string> VS;
 
 class ${1:`(file-name-sans-ext)`}
 {
@@ -29,8 +29,3 @@ public:
 $> $0
 private:
 };
-
-int main()
-{
-  $1 *s = new $1;
-}
