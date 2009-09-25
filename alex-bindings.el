@@ -17,5 +17,6 @@
 (global-set-key "\C-c\t" 'magit-toggle-section)
 ;;(global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
 (global-set-key "\C-cr" 'org-remember)
+(global-set-key (kbd "M-<f8>") 'webjump)
 
 (provide 'alex-bindings)
