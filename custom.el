@@ -3,8 +3,8 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(c-basic-offset 2)
- '(c-default-style (quote ((java-mode . "java") (other . "k&r"))))
+ '(c-basic-offset (quote set-from-style))
+ '(c-default-style (quote ((java-mode . "java"))))
  '(compilation-scroll-output t)
  '(default-major-mode (quote org-mode) t)
  '(ecb-layout-name "right1")

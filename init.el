@@ -23,11 +23,11 @@
 ;; since they are likely to be used in every session
 
 (require 'cl)
-(require 'saveplace)
-(require 'ffap)
-(require 'uniquify)
-(require 'ansi-color)
-(require 'recentf)
+;(require 'saveplace)
+;(require 'ffap)
+;(require 'uniquify)
+;(require 'ansi-color)
+;(require 'recentf)
 
 ;; Required stuff
 (require 'alex-defuns)
@@ -40,6 +40,7 @@
 (require 'alex-compilation)
 (require 'alex-c-mode)
 (require 'alex-bison)
+(require 'alex-textmate)
 
 ;; Stuff not required on start-up
 (autoload 'films-list "alex-films" "List films on TV" t)

@@ -26,6 +26,8 @@
 (set-default 'imenu-auto-rescan t)
 (setq ring-bell-function (lambda () t))
 (setq-default fill-column 79)
+(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-scroll-amount '(1))
 
 ;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
 ;; (add-hook 'text-mode-hook 'turn-on-flyspell)
