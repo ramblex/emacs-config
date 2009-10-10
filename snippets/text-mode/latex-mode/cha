@@ -1,6 +1,3 @@
-# This was cloned from a TextMate bundle for yasnippet.
+#name: Chapter
 # --
-\chapter{${1:chapter name}} % (fold)
-\label{cha:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3)/g}}}
-${0:$TM_SELECTED_TEXT}
-% chapter $2 (end)
+\chapter{${1:chapter name}}
