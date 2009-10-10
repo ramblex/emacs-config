@@ -7,7 +7,7 @@
 
 (provide 'bison-mode)
 
-;;(autoload 'bison-mode "alex-bison" "Bison editing mode" t)
+;;(autoload 'bison-mode "my-bison" "Bison editing mode" t)
 (add-to-list 'auto-mode-alist '("\\.yy$" . bison-mode))
 
-(provide 'alex-bison)
+(provide 'my-bison)

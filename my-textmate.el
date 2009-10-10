@@ -6,4 +6,4 @@
 (setq tm/use-newline-and-indent t)
 (setq tm/use-goto-line nil)
 
-(provide 'alex-textmate)
+(provide 'my-textmate)

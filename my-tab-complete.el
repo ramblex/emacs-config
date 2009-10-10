@@ -20,4 +20,4 @@
  	try-complete-lisp-symbol
  	indent-for-tab-command))
 
-(provide 'alex-tab-complete)
+(provide 'my-tab-complete)

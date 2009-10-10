@@ -6,4 +6,4 @@
                              "~/org/projects.org"
                              "~/org/todo.org"))
 
-(provide 'alex-org)
+(provide 'my-org)

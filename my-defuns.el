@@ -72,4 +72,4 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (compile 
    "cd /Users/alexduller/project/simgen/test/; ./run_tests.rb --no-colours"))
 
-(provide 'alex-defuns)
+(provide 'my-defuns)

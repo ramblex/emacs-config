@@ -4,4 +4,4 @@
    ("\\(Failed\\)" 1 compilation-error-face prepend)
    ("\\(Passed\\)" 1 compilation-info)))
 
-(provide 'alex-compilation)
+(provide 'my-compilation)

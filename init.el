@@ -23,26 +23,25 @@
 (eval-when-compile (require 'cl))
 
 ;; Required stuff
-(require 'alex-defuns)
-(require 'alex-bindings)
-(require 'alex-misc)
-(require 'alex-tab-complete)
-(require 'alex-rails)
-(require 'alex-magit)
-(require 'alex-org)
-(require 'alex-compilation)
-(require 'alex-c-mode)
-(require 'alex-bison)
-(require 'alex-textmate)
+(require 'my-defuns)
+(require 'my-bindings)
+(require 'my-misc)
+(require 'my-tab-complete)
+(require 'my-rails)
+(require 'my-magit)
+(require 'my-org)
+(require 'my-compilation)
+(require 'my-c-mode)
+(require 'my-bison)
+(require 'my-textmate)
 
 ;; Stuff not required on start-up
-(autoload 'yaml-mode "alex-yaml" "YAML editing mode" t)
+(autoload 'yaml-mode "my-yaml" "YAML editing mode" t)
 (autoload 'php-mode "php-mode" "PHP editing mode" t)
 
 (load custom-file 'noerror)
 
 ;; System specific stuff
-
 (setq system-specific-config (concat dotfiles-dir system-name ".el"))
 (if (file-exists-p system-specific-config) (load system-specific-config))
 

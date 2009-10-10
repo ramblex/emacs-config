@@ -23,4 +23,4 @@
 ; From my final year project
 (add-to-list 'auto-mode-alist '("\\.template" . c++-mode))
 
-(provide 'alex-c-mode)
+(provide 'my-c-mode)

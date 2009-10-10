@@ -4,8 +4,8 @@
 (add-to-list 'load-path (concat package-user-dir "/rhtml"))
 (require 'rhtml-mode)
 (add-hook 'rhtml-mode-hook 'rinari-launch)
-;(add-hook 'rhtml-mode-hook 'alex-electric-mode)
-;(add-hook 'ruby-mode-hook 'alex-electric-mode)
+;(add-hook 'rhtml-mode-hook 'my-electric-mode)
+;(add-hook 'ruby-mode-hook 'my-electric-mode)
 
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 
@@ -110,4 +110,4 @@
  '(("\\(</?\\)" 1 font-lock-function-name-face prepend)
    ("\\(/?>\\)" 1 font-lock-function-name-face prepend)))
 
-(provide 'alex-rails)
+(provide 'my-rails)

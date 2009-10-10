@@ -19,4 +19,4 @@
 (global-set-key "\C-cr" 'org-remember)
 (global-set-key (kbd "M-<f8>") 'webjump)
 
-(provide 'alex-bindings)
+(provide 'my-bindings)

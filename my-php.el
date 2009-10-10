@@ -1,3 +1,3 @@
 (require 'php-mode)
 
-(provide 'alex-php)
+(provide 'my-php)

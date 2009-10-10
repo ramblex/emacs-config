@@ -6,4 +6,4 @@
 
 (add-hook 'magit-mode-hook 'disable-yas)
 
-(provide 'alex-magit)
+(provide 'my-magit)

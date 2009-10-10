@@ -1,3 +1,3 @@
 (require 'haml-mode)
 
-(provide 'alex-haml)
+(provide 'my-haml)
