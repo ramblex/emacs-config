@@ -38,7 +38,7 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (if (one-window-p)
       (split-window-horizontally)))
 
-(defun normal-window ()
+(defun normal ()
   "Change to only one window of width 80"
   (interactive)
   (modify-frame-parameters (selected-frame) '((width . 80) (height . 46)))
