@@ -3,34 +3,39 @@
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f"))
   (tooltip-mode -1)
+  (menu-bar-mode -1)
   (tool-bar-mode -1)
   (blink-cursor-mode -1))
 
 (global-font-lock-mode t)
 (setq inhibit-startup-message t)
-(menu-bar-mode -1)
 (line-number-mode 1)
 (column-number-mode 1)
 (show-paren-mode 1)
+(set-default 'indicate-empty-lines t)
+(setq ring-bell-function (lambda () t))
+
+;; Mouse
+(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-scroll-amount '(1))
+
+;; ido mode
 (ido-mode t)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
       ido-max-prospects 10)
-(add-hook 'ido-setup-hook
-	  (lambda ()
-	    (define-key ido-completion-map [tab] 'ido-complete)))
+(defun ido-complete-hook ()
+  (define-key ido-completion-map [tab] 'ido-complete))
+(add-hook 'ido-setup-hook 'ido-complete-hook)
+
+;; Auto-fill mode
+(setq-default fill-column 79)
+(add-hook 'latex-mode-hook 'turn-on-auto-fill)
+
+;; Indentation
 (setq standard-indent 2)
 (set-default 'indent-tabs-mode nil)
-(set-default 'indicate-empty-lines t)
-(set-default 'imenu-auto-rescan t)
-(setq ring-bell-function (lambda () t))
-(setq-default fill-column 79)
-(setq mouse-wheel-progressive-speed nil)
-(setq mouse-wheel-scroll-amount '(1))
-
-;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
-;; (add-hook 'text-mode-hook 'turn-on-flyspell)
 
 (defun java-indent-fix ()
   (c-set-offset 'substatement-open 0))
@@ -42,7 +47,7 @@
 (setq vhdl-electric-mode nil)
 (setq vhdl-stutter-mode nil)
 
-(setq backup-directory-alist `(("." . ,(expand-file-name
-					(concat dotfiles-dir "backups")))))
+;; Don't make backups - use git...
+(setq make-backup-files nil)
 
 (provide 'my-misc)
