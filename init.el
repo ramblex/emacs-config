@@ -42,7 +42,13 @@
 (load custom-file 'noerror)
 
 ;; System specific stuff
+(if (eq system-type 'darwin)
+    (setq system-name (car (split-string system-name "\\."))))
 (setq system-specific-config (concat dotfiles-dir system-name ".el"))
 (if (file-exists-p system-specific-config) (load system-specific-config))
+
+;; Set up the frame size
+
+(normal)
 
 ;;; init.el ends here
