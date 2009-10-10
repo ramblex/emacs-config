@@ -44,12 +44,6 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (modify-frame-parameters (selected-frame) '((width . 80) (height . 46)))
   (delete-other-windows))
 
-(defun my-ecb-activate ()
-  "Start up ECB"
-  (interactive)
-  (require 'alex-ecb)
-  (ecb-activate))
-
 (defun generate-etags ()
   "Generate etags for the current directory"
   (interactive)
