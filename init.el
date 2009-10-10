@@ -21,11 +21,6 @@
 ;; since they are likely to be used in every session
 
 (eval-when-compile (require 'cl))
-;(require 'saveplace)
-;(require 'ffap)
-;(require 'uniquify)
-;(require 'ansi-color)
-;(require 'recentf)
 
 ;; Required stuff
 (require 'alex-defuns)
