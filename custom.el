@@ -12,7 +12,8 @@
  '(ecb-options-version "2.40")
  '(ecb-source-path (quote ("~")))
  '(ns-alternate-modifier (quote none))
- '(ns-command-modifier (quote meta)))
+ '(ns-command-modifier (quote meta))
+ '(tm/backspace-delete-column t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
