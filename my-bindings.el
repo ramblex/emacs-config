@@ -1,22 +1,28 @@
-(global-set-key "\C-c\C-k" 'copy-line)
+;; Compilation
 (global-set-key [f4] 'previous-error)
 (global-set-key [f5] 'next-error)
 (global-set-key [f6] 'run-fproject-tests)
 (global-set-key [f7] 'recompile)
 (global-set-key [f8] 'compile)
-(global-set-key "\C-c9" 'revert-buffer)
+
+;; Window navigation
+(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
+
+;; File navigation
 (global-set-key (kbd "M-[") 'backward-paragraph)
 (global-set-key (kbd "M-]") 'forward-paragraph)
 (global-set-key (kbd "M-5") 'vi-paren-bounce)
-(global-set-key "\C-c\C-c" 'comment-region)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
-(global-set-key "\C-xg" 'magit-status)
-(global-set-key "\C-c\t" 'magit-toggle-section)
-;;(global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
-(global-set-key "\C-cr" 'org-remember)
-(global-set-key (kbd "M-<f8>") 'webjump)
+
+;; File operations
+(global-set-key (kbd "C-c C-c") 'comment-region)
+(global-set-key (kbd "C-c 9") 'revert-buffer)
+(global-set-key (kbd "C-c C-k") 'copy-line)
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (provide 'my-bindings)
