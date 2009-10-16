@@ -13,7 +13,7 @@
  '(ecb-source-path (quote ("~")))
  '(ns-alternate-modifier (quote none))
  '(ns-command-modifier (quote meta))
- '(tm/backspace-delete-column t))
+ '(tm/backspace-delete-column nil))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
