@@ -6,7 +6,6 @@
  '(c-basic-offset (quote set-from-style))
  '(c-default-style (quote ((java-mode . "java"))))
  '(compilation-scroll-output t)
- '(default-major-mode (quote org-mode) t)
  '(ecb-layout-name "right1")
  '(ecb-layout-window-sizes (quote (("right1" (0.3333333333333333 . 0.275) (0.3333333333333333 . 0.35) (0.3333333333333333 . 0.35)))))
  '(ecb-options-version "2.40")
