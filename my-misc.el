@@ -15,6 +15,9 @@
 (set-default 'indicate-empty-lines t)
 (setq ring-bell-function (lambda () t))
 
+;; Turn off auto-saving
+(setq auto-save-default nil)
+
 ;; Mouse
 (setq mouse-wheel-progressive-speed nil)
 (setq mouse-wheel-scroll-amount '(1))
