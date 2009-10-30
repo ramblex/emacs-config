@@ -1,0 +1,3 @@
+#name: SELECT FROM
+# --
+SELECT ${1:*} FROM ${2:tbl}$3;

@@ -1,0 +1,6 @@
+#name: AS OBJECT
+# --
+CREATE OR REPLACE TYPE ${1:mytype_t} AS OBJECT (
+       $0
+);
+/

@@ -1,0 +1,3 @@
+#name: NESTED TABLE
+# --
+NESTED TABLE ${1:column} STORE AS ${2:nested table}
