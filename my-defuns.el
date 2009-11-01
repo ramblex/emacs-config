@@ -72,4 +72,17 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   (compile 
    "cd /Users/alexduller/project/simgen/test/; ./run_tests.rb --no-colours"))
 
+(defun print-to-pdf ()
+  "Save a buffer to pdf ready for printing"
+  (interactive)
+  (setq output-file (read-from-minibuffer "Save to: "))
+  (ps-spool-buffer-with-faces)
+  (switch-to-buffer "*PostScript*")
+  (write-file "/tmp/tmp.ps")
+  (kill-buffer "tmp.ps")
+  (setq cmd (concat "ps2pdf14 /tmp/tmp.ps " output-file))
+  (shell-command cmd)
+  (shell-command "rm /tmp/tmp.ps")
+  (message (concat "Saved to: " output-file)))
+
 (provide 'my-defuns)
