@@ -1,0 +1,3 @@
+#name : xs:element
+# --
+<xs:element name="$1" type="$2" minOccurs="${3:1}" maxOccurs="${4:1}" />

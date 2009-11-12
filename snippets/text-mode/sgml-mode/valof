@@ -1,0 +1,3 @@
+#name : xsl:value_of select
+# --
+<xsl:value-of select="$0" />
