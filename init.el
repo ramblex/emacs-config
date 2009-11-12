@@ -34,10 +34,10 @@
 (require 'my-c-mode)
 (require 'my-bison)
 (require 'my-textmate)
+(require 'my-php)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)
-(autoload 'php-mode "php-mode" "PHP editing mode" t)
 
 (load custom-file 'noerror)
 
