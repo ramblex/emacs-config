@@ -4,6 +4,16 @@
   (c-set-offset 'inline-open 0))
 (add-hook 'c++-mode-hook 'c++-indent-fix)
 
+(defun-my c++-doc-lookup "Documentation for"
+  "Search C++ documentation for the requested term"
+  (browse-url (find-location-for-doc-from-buffer
+              arg
+              "*C Documentation*"
+              (lambda () (create-file-list 
+                          "~/emacs-config/doc/c++/" 
+                          "*C Documentation*"))
+              "~/emacs-config/doc/c++/")))
+
 (defun my-compile ()
   (unless (or (file-exists-p "makefile")
               (file-exists-p "Makefile"))
