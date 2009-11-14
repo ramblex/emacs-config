@@ -7,6 +7,8 @@
   (tool-bar-mode -1)
   (blink-cursor-mode -1))
 
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "lemon chiffon")
 (global-font-lock-mode t)
 (setq inhibit-startup-message t)
 (line-number-mode 1)
