@@ -3,7 +3,6 @@
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f"))
   (tooltip-mode -1)
-  (menu-bar-mode -1)
   (tool-bar-mode -1)
   (blink-cursor-mode -1))
 
