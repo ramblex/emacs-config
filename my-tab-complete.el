@@ -7,7 +7,9 @@
 
 (defun run-hippie-expand ()
   (interactive)
-  (ignore-errors (hippie-expand nil)))
+  (if (minibufferp (current-buffer))
+      (minibuffer-complete)
+    (ignore-errors (hippie-expand nil))))
 
 (global-set-key [tab] 'run-hippie-expand)
 
