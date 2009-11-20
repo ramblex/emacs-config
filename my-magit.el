@@ -1,9 +1,9 @@
 (add-to-list 'load-path (concat package-user-dir "/magit"))
 (require 'magit)
 
-(defun disable-yas ()
-  (setq yas/dont-activate t))
+(defun magit-tab ()
+  (local-set-key [tab] 'magit-toggle-section))
 
-(add-hook 'magit-mode-hook 'disable-yas)
+(add-hook 'magit-mode-hook 'magit-tab)
 
 (provide 'my-magit)
