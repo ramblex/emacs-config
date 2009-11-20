@@ -2863,7 +2863,9 @@ will be deleted before inserting template."
         ;; them mostly to make the undo information
         ;;
         (setq yas/start-column (save-restriction (widen) (current-column)))
-        (insert template)
+        (if (string= "\n" (substring template -1 nil))
+            (insert (substring template 0 -1))
+          (insert template))
 
         (setq snippet
               (if expand-env
