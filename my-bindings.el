@@ -7,6 +7,8 @@
 
 ;; Window navigation
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
+(global-set-key [f2] 'normal)
+(global-set-key [f3] 'side-by-side)
 
 ;; File navigation
 (global-set-key (kbd "M-[") 'backward-paragraph)
