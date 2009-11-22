@@ -36,6 +36,7 @@
 (require 'my-textmate)
 (require 'my-php)
 (require 'my-asciidoc)
+(require 'my-colours)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)
