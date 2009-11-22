@@ -3,4 +3,4 @@
 
 (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
 
-(provide 'my-doc-mode)
+(provide 'my-asciidoc)

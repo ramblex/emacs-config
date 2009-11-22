@@ -35,6 +35,7 @@
 (require 'my-bison)
 (require 'my-textmate)
 (require 'my-php)
+(require 'my-asciidoc)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)
