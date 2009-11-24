@@ -12,4 +12,6 @@
 (set-face-foreground 'font-lock-string-face "darkkhaki")
 (set-face-foreground 'font-lock-comment-face "#444")
 
+(set-face-background 'magit-item-highlight "gray5")
+
 (provide 'my-colours)
