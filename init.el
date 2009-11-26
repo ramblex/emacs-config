@@ -33,7 +33,7 @@
 (require 'my-compilation)
 (require 'my-c-mode)
 (require 'my-bison)
-(require 'my-textmate)
+(require 'my-autopair)
 (require 'my-php)
 (require 'my-asciidoc)
 (require 'my-colours)
