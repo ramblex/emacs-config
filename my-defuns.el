@@ -34,7 +34,7 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
 (defun side-by-side ()
   "The perfect size for having two windows side by side"
   (interactive)
-  (modify-frame-parameters (selected-frame) '((width . 166) (height . 46)))
+  (modify-frame-parameters (selected-frame) '((width . 163) (height . 46)))
   (if (one-window-p)
       (split-window-horizontally)))
 
