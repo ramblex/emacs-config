@@ -14,4 +14,10 @@
 
 (set-face-background 'magit-item-highlight "gray5")
 
+;(set-face-foreground 'erc-prompt-face "white")
+
+(set-face-background 'erb-out-face "gray10")
+(set-face-background 'erb-out-delim-face "gray10")
+(set-face-background 'erb-exec-face "gray10")
+
 (provide 'my-colours)
