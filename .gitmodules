@@ -16,3 +16,6 @@
 [submodule "vendor/picovhdl-mode"]
 	path = vendor/picovhdl-mode
 	url = git@github.com:ramblex/picovhdl-mode.git
+[submodule "snippets"]
+	path = snippets
+	url = git@github.com:ramblex/emacs-snippets.git
