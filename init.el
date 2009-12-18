@@ -22,6 +22,9 @@
 
 (eval-when-compile (require 'cl))
 
+;; Start a shell
+(eshell)
+
 ;; Required stuff
 (require 'my-defuns)
 (require 'my-bindings)
@@ -36,8 +39,8 @@
 (require 'my-autopair)
 (require 'my-php)
 (require 'my-asciidoc)
-(require 'my-colours)
 (require 'my-picovhdl-mode)
+(require 'my-colours)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)

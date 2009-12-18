@@ -7,9 +7,9 @@
   (tooltip-mode -1)
   (tool-bar-mode -1)
   (blink-cursor-mode 1))
-
 (window-line-height 'header-line)
-(modify-all-frames-parameters '((cursor-type . (bar . 1))))
+(modify-all-frames-parameters '((cursor-type . (bar . 1))
+                                (line-spacing . 1)))
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "lemon chiffon")
 (global-font-lock-mode t)
