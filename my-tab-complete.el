@@ -1,9 +1,16 @@
 (add-to-list 'load-path (concat package-user-dir "/yasnippet"))
-(setq snippets-dir (concat dotfiles-dir "snippets"))
+(setq snippets-dir (concat package-user-dir "/yasnippet/snippets"))
+(setq my-snippets-dir (concat dotfiles-dir "snippets"))
+
+(stringp snippets-dir)
 
 (require 'yasnippet)
 (yas/initialize)
-(yas/load-directory snippets-dir)
+(setq yas/root-directory '("~/emacs-config/snippets"
+                           "~/emacs-config/vendor/yasnippet/snippets"))
+(mapc 'yas/load-directory yas/root-directory)
+(setq yas/ignore-filenames-as-triggers)
+
 
 (defun run-hippie-expand ()
   (interactive)
