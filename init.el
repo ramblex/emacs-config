@@ -37,6 +37,7 @@
 (require 'my-php)
 (require 'my-asciidoc)
 (require 'my-colours)
+(require 'my-picovhdl-mode)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)

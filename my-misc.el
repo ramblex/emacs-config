@@ -1,6 +1,6 @@
 ;; Stuff that doesn't fit anywhere else
 
-;(set-face-font 'default "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(set-face-font 'default "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f"))
@@ -50,10 +50,6 @@
 (add-hook 'java-mode-hook 'java-indent-fix)
 
 (setq css-indent-offset 2)
-
-;; Turn off the annoying shit in VHDL
-(setq vhdl-electric-mode nil)
-(setq vhdl-stutter-mode nil)
 
 ;; Don't make backups - use git...
 (setq make-backup-files nil)

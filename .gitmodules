@@ -13,3 +13,6 @@
 [submodule "vendor/textmate"]
 	path = vendor/textmate
 	url = ./vendor/textmate
+[submodule "vendor/picovhdl-mode"]
+	path = vendor/picovhdl-mode
+	url = git@github.com:ramblex/picovhdl-mode.git
