@@ -1,3 +1,5 @@
+vendor/autopair
+vendor/yasnippet
 *.lock
 *.desktop*
 *before_ecb*
