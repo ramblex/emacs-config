@@ -1,5 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-def ${1:method_name}
-$>     $0
-end

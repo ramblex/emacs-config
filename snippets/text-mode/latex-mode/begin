@@ -1,5 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-\\begin{${1:env}}
-  $0
-\\end{$1}

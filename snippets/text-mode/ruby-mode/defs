@@ -1,5 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-def self.${1:class_method_name}
-	$0
-end

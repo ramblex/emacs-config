@@ -1,3 +1,0 @@
-#name: DROP TYPE
-# --
-DROP TYPE ${1:type} FORCE;

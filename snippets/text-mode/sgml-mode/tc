@@ -1,3 +1,0 @@
-#name : self-closing tag
-# --
-<$1 />

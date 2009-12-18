@@ -1,3 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-scan(/${1:pattern}/) { |${2:match}| $0 }

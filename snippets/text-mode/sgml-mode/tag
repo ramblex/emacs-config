@@ -1,3 +1,0 @@
-#name : bare tag
-# --
-<${1:$(yas/substr text "[^ ]*")}>$0</${1:$(yas/substr text "[^ ]*")}>

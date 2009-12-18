@@ -1,5 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-\section{${1:section name}}
-$0
-% section $1

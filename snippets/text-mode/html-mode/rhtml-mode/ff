@@ -1,4 +1,0 @@
-#name : form field
-# --
-<%= f.label :${1:label} %><br />
-<%= f.${2:text_field} :$1 %>$0

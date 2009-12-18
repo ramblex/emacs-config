@@ -1,3 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-alias_method :${1:new_name}, :${0:old_name}

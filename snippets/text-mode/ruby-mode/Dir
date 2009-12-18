@@ -1,3 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-Dir.glob(${1:"${2:dir/glob/*}"}) { |${3:file}| $0 }

@@ -1,6 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-case ${1:object}
-when ${2:condition}
-	$0
-end

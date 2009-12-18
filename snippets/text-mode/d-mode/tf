@@ -1,7 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-try {
-	$1
-} finally {
-	$0
-}

@@ -1,8 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-/**
- * $2
- */
-struct ${1:name}() {
-	$3
-}

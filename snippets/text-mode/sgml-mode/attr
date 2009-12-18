@@ -1,3 +1,0 @@
-#name : xsl:attribute
-# --
-<xsl:attribute name="$1">$0</xsl:attribute>

@@ -1,7 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-class ${1:${TM_FILENAME/(.*?)(\..+)/$1/}} {
-	this($2) {
-		$0
-	}
-}

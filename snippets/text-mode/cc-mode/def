@@ -1,8 +1,0 @@
-#name : header guards
-# --
-#ifndef ${1:`(upcase (file-name-sans-ext))`_H_}
-#define $1
-
-$0
-
-#endif /* $1 */

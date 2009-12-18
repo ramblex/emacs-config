@@ -1,3 +1,0 @@
-#name: Chapter
-# --
-\chapter{${1:chapter name}}

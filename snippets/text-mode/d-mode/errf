@@ -1,3 +1,0 @@
-# This was cloned from a TextMate bundle for yasnippet.
-# --
-Stderr.format("${1:foo = {\}}", $2).newline;
