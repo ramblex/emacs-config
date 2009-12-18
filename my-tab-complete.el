@@ -9,8 +9,10 @@
 (setq yas/root-directory '("~/emacs-config/snippets"
                            "~/emacs-config/vendor/yasnippet/snippets"))
 (mapc 'yas/load-directory yas/root-directory)
-(setq yas/ignore-filenames-as-triggers)
-
+(setq yas/ignore-filenames-as-triggers t)
+(setq yas/prompt-functions '(yas/dropdown-prompt
+                             yas/ido-prompt
+                             yas/completing-prompt))
 
 (defun run-hippie-expand ()
   (interactive)
