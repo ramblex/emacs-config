@@ -23,6 +23,8 @@
 (global-set-key (kbd "C-c C-c") 'comment-region)
 (global-set-key (kbd "C-c 9") 'revert-buffer)
 (global-set-key (kbd "C-c C-k") 'copy-line)
+(global-set-key (kbd "C-o") 'vim-shift-o)
+(global-set-key (kbd "C-i") 'vim-o)
 
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)

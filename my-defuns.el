@@ -136,4 +136,19 @@ that may be created with buffer-creation"
       (beginning-of-line)
       (re-search-forward regexp end t))))
 
+(defun vim-o ()
+  "make a new line below this no matter where point is on the current line.
+This mimics using o in vim in command mode"
+  (interactive)
+  (end-of-line)
+  (newline))
+
+(defun vim-shift-o ()
+  "make a new line above this no matter where point is on the current line.
+This mimics O in vim in command mode"
+  (interactive)
+  (previous-line)
+  (end-of-line)
+  (newline))
+
 (provide 'my-defuns)
