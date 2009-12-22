@@ -17,8 +17,7 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
 	(next-char (char-to-string (following-char))))
 	(cond ((string-match "[[{(<]" next-char) (forward-sexp 1))
 		  ((string-match "[\]})>]" prev-char) (backward-sexp 1))
-		  (t (error "%s" "Not on a paren, brace, or bracket"))))
-)
+		  (t (error "%s" "Not on a paren, brace, or bracket")))))
 
 (defun sudo-edit (&optional arg)
   (interactive "p")
@@ -53,24 +52,6 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   "Return the current file name without extension"
   (substring (file-name-nondirectory (buffer-file-name)) 
  0 (string-match "\\." (file-name-nondirectory (buffer-file-name)))))
-
-;; Final year project stuff
-(require 'comint)
-(defconst *ruby* "/usr/bin/ruby")
-(defconst *tests*
-  (expand-file-name "~/project/simgen/test/run_tests.rb"))
-
-(defun my-run-tests ()
-  "Run final year project tests using comint"
-  (interactive)
-  (apply 'make-comint "Tests" *ruby* nil (list *tests*))
-  (switch-to-buffer-other-window "*Tests*"))
-
-(defun run-fproject-tests ()
-  "Run tests for final year project"
-  (interactive)
-  (compile 
-   "cd /Users/alexduller/project/simgen/test/; ./run_tests.rb --no-colours"))
 
 (defun print-to-pdf ()
   "Save a buffer to pdf ready for printing"
