@@ -20,6 +20,10 @@
 (set-default 'indicate-empty-lines t)
 (setq ring-bell-function (lambda () t))
 
+;; eshell 
+;; Allow easier redirection to buffers
+(setq eshell-buffer-shorthand t)
+
 ;; Turn off auto-saving
 (setq auto-save-default nil)
 

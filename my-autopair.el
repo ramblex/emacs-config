@@ -25,4 +25,13 @@ around the region, otherwise use the default action"
 (setq autopair-handle-action-fns (list 
                                   #'my-autopair-action))
 
+(add-hook 'eshell-mode-hook
+          #'(lambda ()
+              (push '(?< . ?>)
+                    (getf autopair-extra-pairs :code))))
+
+(add-hook 'eshell-mode-hook
+         #'(lambda ()
+             (modify-syntax-entry ?* "\"")))
+
 (provide 'my-autopair)
