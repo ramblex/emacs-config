@@ -1,6 +1,6 @@
 (set-background-color "gray12")
 (set-foreground-color "AntiqueWhite3")
-(set-cursor-color "AntiqueWhite3")
+(set-cursor-color "gray37")
 (set-face-background 'hl-line "gray9")
 (set-face-background 'region "#3d3d3d")
 (set-face-foreground 'region "AntiqueWhite2")

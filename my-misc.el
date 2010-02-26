@@ -1,6 +1,6 @@
 ;; Stuff that doesn't fit anywhere else
 
-(set-face-font 'default "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;(set-face-font 'default "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f"))
@@ -8,7 +8,7 @@
   (tool-bar-mode -1)
   (blink-cursor-mode 1))
 (window-line-height 'header-line)
-(modify-all-frames-parameters '((cursor-type . (bar . 1))
+(modify-all-frames-parameters '((cursor-type . box)
                                 (line-spacing . 1)))
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "lemon chiffon")

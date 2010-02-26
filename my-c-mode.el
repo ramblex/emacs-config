@@ -25,11 +25,13 @@
 
 (require 'google-c-style)
 (add-hook 'c++-mode-hook 'google-set-c-style)
+(add-hook 'c-mode-hook 'google-set-c-style)
 
 (add-to-list 'auto-mode-alist '("\\.lex$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.ll$" . c++-mode))
 (add-to-list 'auto-mode-alist '("README$" . text-mode))
-(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
 ; From my final year project
 (add-to-list 'auto-mode-alist '("\\.template" . c++-mode))
 

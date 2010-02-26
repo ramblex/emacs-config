@@ -41,6 +41,7 @@
 (require 'my-asciidoc)
 (require 'my-picovhdl-mode)
 (require 'my-colours)
+(require 'my-prolog)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)
@@ -49,7 +50,7 @@
 
 ;; System specific stuff
 (if (eq system-type 'darwin)
-    (setq system-name (car (split-string system-name "\\."))))
+    (setq system-name "alex-macbook"))
 (setq system-specific-config (concat dotfiles-dir system-name ".el"))
 (if (file-exists-p system-specific-config) (load system-specific-config))
 

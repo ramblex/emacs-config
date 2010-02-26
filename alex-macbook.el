@@ -6,8 +6,10 @@
                        ":/Users/alexduller/dmd/osx/bin"))
 (setq exec-path (append exec-path '("/sw/bin" 
                                     "/usr/local/bin" 
+                                    "/opt/local/bin"
                                     "/usr/texbin"
                                     "/Users/alexduller/dmd/osx/bin")))
+(setenv "PAGER" "cat")
 
 (defun bja-growl-notification (title message &optional sticky)
   "Send a Growl notification"

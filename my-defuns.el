@@ -57,13 +57,13 @@ buffer read-only, so I suggest setting kill-read-only-ok to t."
   "Save a buffer to pdf ready for printing"
   (interactive)
   (setq output-file (read-from-minibuffer "Save to: "))
-  (ps-spool-buffer-with-faces)
+  (ps-spool-buffer)
   (switch-to-buffer "*PostScript*")
   (write-file "/tmp/tmp.ps")
   (kill-buffer "tmp.ps")
   (setq cmd (concat "ps2pdf14 /tmp/tmp.ps " output-file))
   (shell-command cmd)
-  (shell-command "rm /tmp/tmp.ps")
+;  (shell-command "rm /tmp/tmp.ps")
   (message (concat "Saved to: " output-file)))
 
 ;; Functions from http://nflath.com/2009/11/java-and-c-utilities/
@@ -128,8 +128,7 @@ This mimics using o in vim in command mode"
   "make a new line above this no matter where point is on the current line.
 This mimics O in vim in command mode"
   (interactive)
-  (previous-line)
-  (end-of-line)
-  (newline))
+  (beginning-of-line)
+  (open-line 1))
 
 (provide 'my-defuns)
