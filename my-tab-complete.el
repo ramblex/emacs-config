@@ -1,18 +1,18 @@
-;; (add-to-list 'load-path (concat package-user-dir "/yasnippet"))
+(add-to-list 'load-path (concat package-user-dir "/yasnippet"))
 ;; (setq snippets-dir (concat package-user-dir "/yasnippet/snippets"))
 ;; (setq my-snippets-dir (concat dotfiles-dir "snippets"))
 
 ;(stringp snippets-dir)
 
-;(require 'yasnippet)
-;; (yas/initialize)
+(require 'yasnippet)
+(yas/initialize)
 ;; (setq yas/root-directory '("~/emacs-config/snippets"
 ;;                            "~/emacs-config/vendor/yasnippet/snippets"))
-;; (mapc 'yas/load-directory yas/root-directory)
+(yas/load-directory (concat package-user-dir "/yasnippet/snippets"))
 ;; (setq yas/ignore-filenames-as-triggers t)
-;; (setq yas/prompt-functions '(yas/dropdown-prompt
-;;                              yas/ido-prompt
-;;                              yas/completing-prompt))
+(setq yas/prompt-functions '(yas/dropdown-prompt
+                             yas/ido-prompt
+                             yas/completing-prompt))
 
 (defun run-hippie-expand ()
   (interactive)
@@ -24,7 +24,8 @@
 
 ;; Hippie expand
 (setq hippie-expand-try-functions-list
-      '(;yas/hippie-try-expand
+      '(yas/hippie-try-expand
+        indent-for-tab-command
         try-expand-dabbrev
         try-expand-dabbrev-all-buffers
  	try-expand-dabbrev-from-kill
@@ -32,6 +33,6 @@
  	try-complete-file-name
  	try-complete-lisp-symbol-partially
  	try-complete-lisp-symbol
- 	indent-for-tab-command))
+ 	))
 
 (provide 'my-tab-complete)
