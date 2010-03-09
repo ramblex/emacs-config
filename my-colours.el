@@ -1,4 +1,4 @@
-(set-background-color "gray12")
+(set-background-color "gray2")
 (set-foreground-color "AntiqueWhite3")
 (set-cursor-color "gray37")
 (set-face-background 'hl-line "gray9")
