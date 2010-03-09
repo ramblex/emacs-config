@@ -40,3 +40,4 @@
                  (bja-growl-notification "Emacs Reminder" message t))
                minutes
                message))
+(provide 'alex-macbook)
