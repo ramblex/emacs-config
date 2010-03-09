@@ -44,6 +44,11 @@
 ;; Auto-fill mode
 (setq-default fill-column 79)
 (add-hook 'latex-mode-hook 'turn-on-auto-fill)
+(defun no-latex-autopair ()
+  (interactive)
+  "autopair doesn't work well in latex"
+  (setq autopair-dont-activate t))
+(add-hook 'latex-mode-hook 'no-latex-autopair)
 
 ;; Indentation
 (setq standard-indent 2)
