@@ -1,4 +1,3 @@
-(add-to-list 'load-path (concat package-user-dir "/autopair"))
 (require 'autopair)
 (autopair-global-mode)
 
