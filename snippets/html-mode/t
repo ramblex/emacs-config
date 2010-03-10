@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: arbitrary tag
+# key: t
+# --
+<${1:tag}>$0</${1:$(yas/substr text "[^ ]*")}>

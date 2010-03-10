@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: \begin{figure}[htp]
+# key: bfig
+# --
+\begin{figure}[htp]
+\centering
+\includegraphics[width=\textwidth]{$1}
+\caption{$2}
+\label{$3}
+\end{figure}

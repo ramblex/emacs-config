@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: shared_ptr<T>
+# key: shp
+# --
+shared_ptr<${1:T}>$0
