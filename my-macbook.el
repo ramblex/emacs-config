@@ -1,3 +1,7 @@
+(load-library "/Users/alexduller/emacs-config/init.el")
+
+(put 'set-goal-column 'disabled nil)
+
 (setq mac-pass-command-to-system nil)
 (setq ns-alternate-modifier (quote none))
 (setq ns-command-modifier (quote meta))

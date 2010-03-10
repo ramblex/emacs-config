@@ -48,13 +48,6 @@
 
 (load custom-file 'noerror)
 
-;; System specific stuff
-;; (if (eq system-type 'darwin)
-;;     (setq system-name "alex-macbook"))
-;; (setq system-specific-config (concat dotfiles-dir system-name ".el"))
-;; (if (file-exists-p system-specific-config) (load system-specific-config))
-(require 'alex-macbook)
-
 ;; Set up the frame size
 
 (normal)
