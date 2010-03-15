@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: lstlisting
+# key: blst
+# --
+\begin{lstlisting}[caption=$1,label=lst:$2]
+$0
+\end{lstlisting}
