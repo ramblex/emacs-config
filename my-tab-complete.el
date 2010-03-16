@@ -25,8 +25,8 @@
  	try-expand-dabbrev-from-kill
  	try-complete-file-name-partially
  	try-complete-file-name
- 	try-complete-lisp-symbol-partially
- 	try-complete-lisp-symbol
+; 	try-complete-lisp-symbol-partially
+; 	try-complete-lisp-symbol
  	))
 
 (provide 'my-tab-complete)
