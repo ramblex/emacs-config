@@ -1179,6 +1179,21 @@ return an expression that when evaluated will issue an error."
     (error (and (not nil-on-error)
                 `(error ,(error-message-string err))))))
 
+(defun yas/read-keybinding (keybinding)
+  "Read KEYBINDING as a snippet keybinding, return a vector."
+  (when (and keybinding
+             (not (string-match "keybinding" keybinding))) 
+    (condition-case err
+        (let ((keybinding-string (or (and (string-match "\".*\"" keybinding)
+                                          (read keybinding))
+                                     ;; "KEY-DESC" with quotes is deprecated..., but supported
+                                     keybinding)))
+          (read-kbd-macro keybinding-string 'need-vector))
+      (error
+       (message "[yas] warning: keybinding \"%s\" invalid for snippet \"%s\" since %s."
+                keybinding name (error-message-string err))
+       nil))))
+
 (defvar yas/mode-symbol nil
   "If non-nil, lookup snippets using this instead of `major-mode'.")
 (make-variable-buffer-local 'yas/mode-symbol)
@@ -1783,22 +1798,8 @@ not need to be a real mode."
                             (file-name-directory file))))
              (condition (fourth snippet))
              (group (fifth snippet))
-             (keybinding (eighth snippet))
+             (keybinding (yas/read-keybinding (eighth snippet)))
              (template nil))
-        ;; Read the snippet's "binding :" expression and turn it into
-        ;; a keysequence vector if all is OK. 
-        ;;
-        (when keybinding
-          (condition-case err
-              (let ((keybinding-string (or (and (string-match "\".*\"" (eighth snippet))
-                                                 (read (eighth snippet)))
-                                            ;; "KEY-DESC" with quotes is deprecated..., but supported
-                                            (eighth snippet))))
-                (setq keybinding (read-kbd-macro keybinding-string 'need-vector)))
-            (error
-             (message "[yas] warning: keybinding \"%s\" invalid for snippet \"%s\" since %s."
-                      keybinding name (error-message-string err))
-             (setf keybinding nil))))
 
         ;; Create the `yas/template' object and store in the
         ;; appropriate snippet table. This only done if we have found
@@ -2203,7 +2204,7 @@ lurking."
 # -*- mode: snippet -*-
 # name: $1
 # key: $2${3:
-# binding: \"${4:direct-keybinding}\"}${5:
+# binding: ${4:direct-keybinding}}${5:
 # expand-env: ((${6:some-var} ${7:some-value}))}
 # --
 $0"))))
@@ -2307,7 +2308,7 @@ With optional prefix argument KILL quit the window and buffer."
       (setf (yas/template-name yas/current-template) (third parsed))
       (setf (yas/template-condition yas/current-template) (fourth parsed))
       (setf (yas/template-expand-env yas/current-template) (sixth parsed))
-      (setf (yas/template-keybinding yas/current-template) (eighth parsed))
+      (setf (yas/template-keybinding yas/current-template) (yas/read-keybinding (eighth parsed)))
       (yas/update-snippet (yas/template-table yas/current-template)
                           yas/current-template
                           old-name
@@ -3365,13 +3366,21 @@ If it does, also:
 * call `yas/advance-start-maybe' on FOM's next fom.
 
 * in case FOM is field call `yas/advance-end-maybe' on its parent
-  field"
-  (when (and fom (< (yas/fom-end fom) newend))
-    (set-marker (yas/fom-end fom) newend)
-    (yas/advance-start-maybe (yas/fom-next fom) newend)
-    (let ((parent (yas/fom-parent-field fom)))
-      (when parent
-        (yas/advance-end-maybe parent newend)))))
+  field
+
+Also, if FOM is an exit-marker, always call
+`yas/advance-start-maybe' on its next fom. This is beacuse
+exit-marker have identical start and end markers.
+
+"
+  (cond ((and fom (< (yas/fom-end fom) newend))
+         (set-marker (yas/fom-end fom) newend)
+         (yas/advance-start-maybe (yas/fom-next fom) newend)
+         (let ((parent (yas/fom-parent-field fom)))
+           (when parent
+             (yas/advance-end-maybe parent newend))))
+        ((yas/exit-p fom)
+         (yas/advance-start-maybe (yas/fom-next fom) newend))))
 
 (defun yas/advance-start-maybe (fom newstart)
   "Maybe advance FOM's start to NEWSTART if it needs it.
@@ -4082,6 +4091,5 @@ handle the end-of-buffer error fired in it by calling
 (provide 'yasnippet)
 
 ;;; yasnippet.el ends here
-
 
 
