@@ -23,7 +23,7 @@
 (eval-when-compile (require 'cl))
 
 ;; Start a shell
-(eshell)
+;(eshell)
 
 ;; Required stuff
 (require 'my-defuns)

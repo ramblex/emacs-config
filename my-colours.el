@@ -22,9 +22,9 @@
 (set-face-background 'erb-out-delim-face "gray10")
 (set-face-background 'erb-exec-face "gray10")
 
-(require 'eshell)
-(set-face-foreground 'eshell-prompt-face "orange")
-(set-face-foreground 'eshell-ls-readonly "white")
+;(require 'eshell)
+;(set-face-foreground 'eshell-prompt-face "orange")
+;(set-face-foreground 'eshell-ls-readonly "white")
 
 (require 'whitespace)
 (set-face-foreground 'whitespace-space "gray10")
