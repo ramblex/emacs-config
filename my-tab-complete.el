@@ -2,7 +2,7 @@
 (yas/initialize)
 ;; (setq yas/root-directory '("~/emacs-config/snippets"
 ;;                            "~/emacs-config/vendor/yasnippet/snippets"))
-(yas/load-directory (concat dotfiles-dir "/snippets"))
+(yas/load-directory (concat dotfiles-dir "snippets"))
 ;; (setq yas/ignore-filenames-as-triggers t)
 (setq yas/prompt-functions '(yas/dropdown-prompt
                              yas/ido-prompt
