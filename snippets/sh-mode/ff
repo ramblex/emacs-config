@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: for file in `cmd` ...
+# key: ff
+# --
+for file in \`$1\`
+do
+        $0
+done;
