@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: vector<T>::iterator = x.begin() ...
+# key: itr
+# --
+vector<${1:T}>::iterator ${2:itr} = ${3:x}.begin();
+for ( ; itr != $3.end(); ++itr)
+{
+        $0
+}
