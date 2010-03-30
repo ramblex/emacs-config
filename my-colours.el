@@ -12,9 +12,11 @@
 (set-face-foreground 'font-lock-string-face "darkkhaki")
 (set-face-foreground 'font-lock-comment-face "#444")
 
-(set-face-background 'magit-item-highlight "gray9")
-(set-face-foreground 'magit-diff-add "yellowgreen")
-(set-face-foreground 'magit-diff-del "firebrick3")
+(eval-after-load "magit"
+  (progn 
+    (set-face-background 'magit-item-highlight "gray9")
+    (set-face-foreground 'magit-diff-add "yellowgreen")
+    (set-face-foreground 'magit-diff-del "firebrick3")))
 
 ;(set-face-foreground 'erc-prompt-face "white")
 
@@ -26,11 +28,12 @@
 ;(set-face-foreground 'eshell-prompt-face "orange")
 ;(set-face-foreground 'eshell-ls-readonly "white")
 
-(require 'whitespace)
-(set-face-foreground 'whitespace-space "gray10")
-(set-face-background 'whitespace-space "gray12")
-(set-face-foreground 'whitespace-newline "gray14")
-(set-face-background 'whitespace-trailing "gray11")
-(set-face-background 'whitespace-empty "gray12")
+;; (eval-after-load "whitespace-mode"
+;;   (progn
+;;     (set-face-foreground 'whitespace-space "gray10")
+;;     (set-face-background 'whitespace-space "gray12")
+;;     (set-face-foreground 'whitespace-newline "gray14")
+;;     (set-face-background 'whitespace-trailing "gray11")
+;;     (set-face-background 'whitespace-empty "gray12")))
 
 (provide 'my-colours)
