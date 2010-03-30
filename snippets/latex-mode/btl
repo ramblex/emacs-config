@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: \begin{table} ...
+# key: btl
+# --
+\begin{table}[htp]
+  \centering
+  \begin{tabular}{| $1|}
+    \hline
+    $0
+    \hline
+  \end{tabular}
+  \caption{$2}
+  \label{tbl:$3}
+\end{table}
