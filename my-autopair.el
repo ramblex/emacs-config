@@ -21,8 +21,9 @@ around the region, otherwise use the default action"
         (insert pair)))
     (autopair-default-handle-action action pair pos-before)))
 
-(setq autopair-handle-action-fns (list 
-                                  #'my-autopair-action))
+;; (setq autopair-handle-action-fns (list 
+;;                                   #'my-autopair-action))
+(setq autopair-autowrap t)
 
 (add-hook 'eshell-mode-hook
           #'(lambda ()
