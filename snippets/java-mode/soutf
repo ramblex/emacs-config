@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: System.out.format(...)
+# key: soutf
+# --
+System.out.format($0);
