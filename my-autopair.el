@@ -24,6 +24,7 @@ around the region, otherwise use the default action"
 ;; (setq autopair-handle-action-fns (list 
 ;;                                   #'my-autopair-action))
 (setq autopair-autowrap t)
+(setq autopair-blink nil)
 
 (add-hook 'eshell-mode-hook
           #'(lambda ()
