@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: Figure~\ref{}
+# name: Figure~\ref{fig:}
 # key: fig
 # --
 Figure~\ref{fig:$0}
