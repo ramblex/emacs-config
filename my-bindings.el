@@ -3,7 +3,7 @@
 (global-set-key [f5] 'next-error)
 (global-set-key [f6] 'run-fproject-tests)
 (global-set-key [f7] 'recompile)
-(global-set-key [f8] 'compile)
+(global-set-key [f8] 'mode-compile)
 
 ;; Window navigation
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
