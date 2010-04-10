@@ -35,13 +35,14 @@
 (require 'my-org)
 (require 'my-compilation)
 (require 'my-c-mode)
-(require 'my-bison)
+;(require 'my-bison)
 (require 'my-autopair)
 (require 'my-php)
 (require 'my-asciidoc)
 (require 'my-picovhdl-mode)
 (require 'my-colours)
 (require 'my-prolog)
+(require 'my-nxhtml)
 
 ;; Stuff not required on start-up
 (autoload 'yaml-mode "my-yaml" "YAML editing mode" t)
