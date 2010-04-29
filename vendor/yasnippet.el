@@ -44,7 +44,7 @@
 ;;
 ;;   Steps 4. and 5. are optional, you don't have to use the minor
 ;;   mode to use YASnippet.
-;; 
+;;
 ;;   Interesting variables are:
 ;;
 ;;       `yas/snippet-dirs'
@@ -54,15 +54,22 @@
 ;;           when used for bulk (re)loading of snippets (at startup or
 ;;           via `yas/reload-all'), directories appearing earlier in
 ;;           the list shadow other dir's snippets. Also, the first
-;;           directory is taken as the default for storing the user's new snippets.
+;;           directory is taken as the default for storing the user's
+;;           new snippets.
 ;;
-;;       `yas/mode-symbol'
+;;           The deprecated `yas/root-directory' aliases this variable
+;;           for backward-compatibility.
+;;
+;;       `yas/extra-modes'
 ;;
 ;;           A local variable that you can set in a hook to override
 ;;           snippet-lookup based on major mode. It is a a symbol (or
 ;;           list of symbols) that correspond to subdirectories of
 ;;           `yas/snippet-dirs' and is used for deciding which
 ;;           snippets to consider for the active buffer.
+;;
+;;           Deprecated `yas/mode-symbol' aliases this variable for
+;;           backward-compatibility.
 ;;
 ;;   Major commands are:
 ;;
@@ -114,7 +121,7 @@
 ;;           sets it to the appropriate major mode and inserts the
 ;;           snippet there, so you can see what it looks like.  This is
 ;;           bound to "C-c C-t" while in `snippet-mode'.
-;;           
+;;
 ;;       M-x yas/describe-tables
 ;;
 ;;           Lists known snippets in a separate buffer. User is
@@ -178,6 +185,8 @@ as the default for storing the user's new snippets."
              (unless (or (not (fboundp 'yas/reload-all))
                          (equal old new))
                (yas/reload-all)))))
+(defun yas/snippet-dirs ()
+  (if (listp yas/snippet-dirs) yas/snippet-dirs (list yas/snippet-dirs)))
 (defvaralias 'yas/root-directory 'yas/snippet-dirs)
 
 (defcustom yas/prompt-functions '(yas/x-prompt
@@ -255,7 +264,7 @@ representation using `read-kbd-macro'."
              ;; `yas/trigger-key' is *not* loaded.
              (if (fboundp 'yas/trigger-key-reload)
                  (yas/trigger-key-reload old)))))
-  
+
 (defcustom yas/next-field-key '("TAB" "<tab>")
   "The key to navigate to next field when a snippet is active.
 
@@ -270,7 +279,7 @@ Can also be a list of strings."
            (set-default symbol val)
            (if (fboundp 'yas/init-yas-in-snippet-keymap)
                (yas/init-yas-in-snippet-keymap))))
-           
+
 
 (defcustom yas/prev-field-key '("<backtab>" "<S-tab>")
   "The key to navigate to previous field when a snippet is active.
@@ -325,7 +334,6 @@ field"
   :type '(choice (const :tag "Call previous command"  call-other-command)
                  (const :tag "Do nothing"             return-nil))
   :group 'yasnippet)
-(make-variable-buffer-local 'yas/fallback-behavior)
 
 (defcustom yas/choose-keys-first nil
   "If non-nil, prompt for snippet key first, then for template.
@@ -356,7 +364,7 @@ under the menu \"Yasnippet\".
 corresponds to a major mode are listed.
 
 - If set to `abbreviate', only the current major-mode
-menu and the modes set in `yas/mode-symbol' are listed.
+menu and the modes set in `yas/extra-modes' are listed.
 
 Any other non-nil value, every submenu is listed."
   :type '(choice (const :tag "Full"  t)
@@ -400,8 +408,7 @@ This cafn only work when snippets are loaded from files."
   :group 'yasnippet)
 
 (defface yas/field-highlight-face
-  '((((class color) (background light)) (:background "DarkSeaGreen1"))
-    (t (:background "DimGrey")))
+  '((t (:inherit 'region)))
   "The face used to highlight the currently active field of a snippet"
   :group 'yasnippet)
 
@@ -492,7 +499,7 @@ This variable is a lisp form:
     * If it evaluates to t or some other non-nil value
 
        * Snippet bearing no conditions, or conditions that
-         evaluate to non-nil, are considered for expansion. 
+         evaluate to non-nil, are considered for expansion.
 
        * Otherwise, the snippet is not considered.
 
@@ -512,7 +519,6 @@ The default value is similar, it filters out potential snippet
 expansions inside comments and string literals, unless the
 snippet itself contains a condition that returns the symbol
 `force-in-comment'.")
-(make-variable-buffer-local 'yas/buffer-local-condition)
 
 
 ;;; Internal variables
@@ -587,7 +593,7 @@ snippet itself contains a condition that returns the symbol
         ["Visit snippet file..." yas/visit-snippet-file
          :help "Prompt for an expandable snippet and find its file"]
         ["Find snippets..." yas/find-snippets
-         :help "Invoke `find-file' in the appropriate snippet directory"] 
+         :help "Invoke `find-file' in the appropriate snippet directory"]
         "----"
         ("Snippet menu behaviour"
          ["Visit snippets" (setq yas/visit-from-menu t)
@@ -654,27 +660,27 @@ snippet itself contains a condition that returns the symbol
                                                  'yas/completing-prompt-prompt)]
          )
         ("Misc"
-         ["Wrap region in exit marker" 
+         ["Wrap region in exit marker"
           (setq yas/wrap-around-region
                 (not yas/wrap-around-region))
           :help "If non-nil automatically wrap the selected text in the $0 snippet exit"
           :style toggle :selected yas/wrap-around-region]
-         ["Allow stacked expansions " 
+         ["Allow stacked expansions "
           (setq yas/triggers-in-field
                 (not yas/triggers-in-field))
           :help "If non-nil allow snippets to be triggered inside other snippet fields"
           :style toggle :selected yas/triggers-in-field]
-         ["Revive snippets on undo " 
+         ["Revive snippets on undo "
           (setq yas/snippet-revival
                 (not yas/snippet-revival))
           :help "If non-nil allow snippets to become active again after undo"
           :style toggle :selected yas/snippet-revival]
-         ["Good grace " 
+         ["Good grace "
           (setq yas/good-grace
                 (not yas/good-grace))
           :help "If non-nil don't raise errors in bad embedded eslip in snippets"
           :style toggle :selected yas/good-grace]
-         ["Ignore filenames as triggers" 
+         ["Ignore filenames as triggers"
           (setq yas/ignore-filenames-as-triggers
                 (not yas/ignore-filenames-as-triggers))
           :help "If non-nil don't derive tab triggers from filenames"
@@ -706,7 +712,7 @@ With optional UNBIND-KEY, try to unbind that key from
   (when (and unbind-key
              (stringp unbind-key)
              (not (string= unbind-key "")))
-    (define-key yas/minor-mode-map (read-kbd-macro unbind-key) nil)) 
+    (define-key yas/minor-mode-map (read-kbd-macro unbind-key) nil))
   (when  (and yas/trigger-key
               (stringp yas/trigger-key)
               (not (string= yas/trigger-key "")))
@@ -729,7 +735,7 @@ all defined direct keybindings to the command
 (defun yas/direct-keymaps-reload ()
   "Force reload the direct keybinding for active snippet tables."
   (interactive)
-  (setq yas/direct-keymaps nil) 
+  (setq yas/direct-keymaps nil)
   (maphash #'(lambda (name table)
                (mapc #'(lambda (table)
                          (push (cons (intern (format "yas//direct-%s" name))
@@ -743,8 +749,8 @@ all defined direct keybindings to the command
         (mode major-mode))
     (while (setq mode (get mode 'derived-mode-parent))
       (push mode modes-to-activate))
-    (when yas/mode-symbol
-      (push yas/mode-symbol modes-to-activate))
+    (dolist (mode (yas/extra-modes))
+      (push mode modes-to-activate))
     (dolist (mode modes-to-activate)
       (let ((name (intern (format "yas//direct-%s" mode))))
         (set-default name nil)
@@ -778,7 +784,7 @@ Key bindings:
          (yas/trigger-key-reload)
          ;; Load all snippets definitions unless we still don't have a
          ;; root-directory or some snippets have already been loaded.
-         ;; 
+         ;;
          (unless (or (null yas/snippet-dirs)
                      (> (hash-table-count yas/tables) 0))
            (yas/reload-all))
@@ -791,7 +797,7 @@ Key bindings:
          (add-hook 'yas/minor-mode-hook 'yas/direct-keymaps-set-vars-runonce 'append))
         (t
          ;; Uninstall the direct keymaps.
-         ;; 
+         ;;
          (remove-hook 'emulation-mode-map-alists 'yas/direct-keymaps))))
 
 (defun yas/direct-keymaps-set-vars-runonce ()
@@ -890,9 +896,11 @@ Do this unless `yas/dont-activate' is t or the function
   expand-env
   file
   keybinding
-  uid
-  menu-binding-pair)
-
+  uuid
+  menu-binding-pair
+  group      ;; as dictated by the #group: directive or .yas-make-groups 
+  perm-group ;; as dictated by `yas/define-menu'
+  )
 
 (defun yas/populate-template (template &rest args)
   "Helper function to populate a template with properties"
@@ -914,16 +922,15 @@ Has the following fields:
 
   A symbol name normally corresponding to a major mode, but can
   also be a pseudo major-mode to be referenced in
-  `yas/mode-symbol', for example.
+  `yas/extra-modes', for example.
 
 `yas/table-hash'
 
-  A hash table, known as the \"keyhash\" where key is a string or
-  a vector. In case of a string its the snippet trigger key,
-  whereas a vector means it's a direct keybinding. The value is
-  yet another hash of (NAME . TEMPLATE), known as the
-  \"namehash\", where NAME is the snippet name and TEMPLATE is a
-  `yas/template' object.
+  A hash table (KEY . NAMEHASH), known as the \"keyhash\". KEY is
+  a string or a vector, where the former is the snippet's trigger
+  and the latter means it's a direct keybinding. NAMEHASH is yet
+  another hash of (NAME . TEMPLATE) where NAME is the snippet's
+  name and TEMPLATE is a `yas/template' object.
 
 `yas/table-parents'
 
@@ -937,27 +944,27 @@ Has the following fields:
   the elements of the keyhash that are vectors appear here as
   bindings to `yas/expand-from-keymap'.
 
-`yas/table-uidhash'
+`yas/table-uuidhash'
 
-  A hash table mapping snippets uid's to the same `yas/template'
-  objects. A snippet uid defaults to the snippet's name.
+  A hash table mapping snippets uuid's to the same `yas/template'
+  objects. A snippet uuid defaults to the snippet's name.
 "
   name
   (hash (make-hash-table :test 'equal))
-  (uidhash (make-hash-table :test 'equal))
+  (uuidhash (make-hash-table :test 'equal))
   (parents nil)
   (direct-keymap (make-sparse-keymap)))
 
-(defun yas/get-template-by-uid (mode uid)
-  "Find the snippet template in MODE by its UID."
+(defun yas/get-template-by-uuid (mode uuid)
+  "Find the snippet template in MODE by its UUID."
   (let* ((table (gethash mode yas/tables mode)))
     (when table
-      (gethash uid (yas/table-uidhash table)))))
+      (gethash uuid (yas/table-uuidhash table)))))
 
 ;; Apropos storing/updating, this works with two steps:
 ;;
-;; 1. `yas/remove-template-by-uid' to remove any existing mappings by
-;;    snippet uid
+;; 1. `yas/remove-template-by-uuid' to remove any existing mappings by
+;;    snippet uuid
 ;;
 ;; 2. `yas/add-template' to add the mappings again:
 ;;
@@ -966,9 +973,9 @@ Has the following fields:
 ;;    TEMPLATE, and is also created a new namehash inside that
 ;;    entry.
 ;;
-(defun yas/remove-template-by-uid (table uid)
-  "Remove from TABLE a template identified by UID."
-  (let ((template (gethash uid (yas/table-uidhash table))))
+(defun yas/remove-template-by-uuid (table uuid)
+  "Remove from TABLE a template identified by UUID."
+  (let ((template (gethash uuid (yas/table-uuidhash table))))
     (when template
       (let* ((name                (yas/template-name template))
              (empty-keys          nil))
@@ -977,7 +984,7 @@ Has the following fields:
         (maphash #'(lambda (k v)
                      (let ((template (gethash name v)))
                        (when (and template
-                                  (eq uid (yas/template-uid template)))
+                                  (eq uuid (yas/template-uuid template)))
                          (remhash name v)
                          (when (zerop (hash-table-count v))
                            (push k empty-keys)))))
@@ -987,9 +994,9 @@ Has the following fields:
         (dolist (key empty-keys)
           (remhash key (yas/table-hash table)))
 
-        ;; Finally, remove the uid from the uidhash
+        ;; Finally, remove the uuid from the uuidhash
         ;;
-        (remhash uid (yas/table-uidhash table))))))
+        (remhash uuid (yas/table-uuidhash table))))))
 
 
 (defun yas/add-template (table template)
@@ -1018,17 +1025,51 @@ keybinding)."
                 (and key (concat key yas/trigger-symbol))))
       (setcar (cdr menu-binding)
               name))
-    
-    (puthash (yas/template-uid template) template (yas/table-uidhash table))))
+
+    (puthash (yas/template-uuid template) template (yas/table-uuidhash table))))
 
 (defun yas/update-template (snippet-table template)
-  "Add or update TEMPLATE in SNIPPET-TABLE"
+  "Add or update TEMPLATE in SNIPPET-TABLE.
 
-  (yas/remove-template-by-uid snippet-table (yas/template-uid template))
-  (yas/add-template snippet-table template))
+Also takes care of adding and updaring to the associated menu."
+  ;; Remove from table by uuid
+  ;;
+  (yas/remove-template-by-uuid snippet-table (yas/template-uuid template))
+  ;; Add to table again
+  ;;
+  (yas/add-template snippet-table template)
+  ;; Take care of the menu
+  ;;
+  (let ((keymap (yas/menu-keymap-get-create snippet-table))
+        (group (yas/template-group template)))
+    (when (and yas/use-menu
+               keymap
+               (not (cdr (yas/template-menu-binding-pair template))))
+      ;; Remove from menu keymap
+      ;;
+      (yas/delete-from-keymap keymap (yas/template-uuid template))
+
+      ;; Add necessary subgroups as necessary.
+      ;; 
+      (dolist (subgroup group)
+        (let ((subgroup-keymap (lookup-key keymap (vector (make-symbol subgroup)))))
+          (unless (and subgroup-keymap
+                       (keymapp subgroup-keymap))
+            (setq subgroup-keymap (make-sparse-keymap))
+            (define-key keymap (vector (make-symbol subgroup))
+              `(menu-item ,subgroup ,subgroup-keymap)))
+            (setq keymap subgroup-keymap)))
+      
+      ;; Add this entry to the keymap
+      ;; 
+      (let ((menu-binding-pair (yas/snippet-menu-binding-pair-get-create template)))
+        (define-key keymap (vector (make-symbol (yas/template-uuid template))) (car menu-binding-pair))))))
 
 (defun yas/fetch (table key)
-  "Fetch snippets in TABLE by KEY. "
+  "Fetch templates in TABLE by KEY.
+
+Return a list of cons (NAME . TEMPLATE) where NAME is a
+string and TEMPLATE is a `yas/template' structure."
   (let* ((keyhash (yas/table-hash table))
          (namehash (and keyhash (gethash key keyhash))))
     (when namehash
@@ -1066,7 +1107,8 @@ This function implements the rules described in
     (if (eq requirement 'always)
         templates
       (remove-if-not #'(lambda (pair)
-                         (yas/template-can-expand-p (yas/template-condition (cdr pair)) requirement))
+                         (yas/template-can-expand-p
+                          (yas/template-condition (cdr pair)) requirement))
                      templates))))
 
 (defun yas/require-template-specific-condition-p ()
@@ -1095,7 +1137,7 @@ conditions to filter out potential expansions."
            (eq requirement result)))))
 
 (defun yas/table-get-all-parents (table)
-  "Returns a list of all parent tables of TABLE" 
+  "Returns a list of all parent tables of TABLE"
   (let ((parents (yas/table-parents table)))
     (when parents
       (append (copy-list parents)
@@ -1200,7 +1242,7 @@ return an expression that when evaluated will issue an error."
 (defun yas/read-keybinding (keybinding)
   "Read KEYBINDING as a snippet keybinding, return a vector."
   (when (and keybinding
-             (not (string-match "keybinding" keybinding))) 
+             (not (string-match "keybinding" keybinding)))
     (condition-case err
         (let ((keybinding-string (or (and (string-match "\".*\"" keybinding)
                                           (read keybinding))
@@ -1212,9 +1254,16 @@ return an expression that when evaluated will issue an error."
                 keybinding name (error-message-string err))
        nil))))
 
-(defvar yas/mode-symbol nil
-  "If non-nil, lookup snippets using this instead of `major-mode'.")
-(make-variable-buffer-local 'yas/mode-symbol)
+(defvar yas/extra-modes nil
+  "If non-nil, also lookup snippets for this/these modes.
+
+Can be a symbol or a list of symbols.
+
+This variable probably makes more sense as buffer-local, so
+ensure your use `make-local-variable' when you set it.")
+(defun yas/extra-modes ()
+  (if (listp yas/extra-modes) yas/extra-modes (list yas/extra-modes)))
+(defvaralias 'yas/mode-symbol 'yas/extra-modes)
 
 (defun yas/table-get-create (mode)
   "Get the snippet table corresponding to MODE.
@@ -1237,28 +1286,25 @@ already have such a property."
 Return a list of 'yas/table' objects indexed by mode.
 
 The modes are tried in this order: optional MODE-SYMBOL, then
-`yas/mode-symbol', then `major-mode' then, unless
+`yas/extra-modes', then `major-mode' then, unless
 DONT-SEARCH-PARENTS is non-nil, the guessed parent mode of either
 MODE-SYMBOL or `major-mode'.
 
 Guessing is done by looking up the MODE-SYMBOL's
 `derived-mode-parent' property, see also `derived-mode-p'."
   (let ((mode-tables
-         (mapcar #'(lambda (mode)
-                     (gethash mode yas/tables))
-                 (append (list mode-symbol)
-                         (if (listp yas/mode-symbol)
-                             yas/mode-symbol
-                           (list yas/mode-symbol))
-                         (list major-mode
-                               (and (not dont-search-parents)
-                                    (get (or mode-symbol major-mode)
-                                         'derived-mode-parent))))))
-        (all-tables))
-    (dolist (table (remove nil mode-tables))
-      (push table all-tables)
-      (nconc all-tables (yas/table-get-all-parents table)))
-    (remove-duplicates all-tables)))
+         (remove nil
+                 (mapcar #'(lambda (mode)
+                             (gethash mode yas/tables))
+                 (remove nil (append (list mode-symbol)
+                                     (yas/extra-modes)
+                                     (list major-mode
+                                           (and (not dont-search-parents)
+                                                (get major-mode
+                                                     'derived-mode-parent)))))))))
+    (remove-duplicates 
+     (append mode-tables
+             (mapcan #'yas/table-get-all-parents mode-tables)))))
 
 (defun yas/menu-keymap-get-create (table)
   "Get or create the main menu keymap correspondong to MODE.
@@ -1269,20 +1315,16 @@ them in all `yas/menu-table'"
          (menu-keymap (or (gethash mode yas/menu-table)
                           (puthash mode (make-sparse-keymap) yas/menu-table)))
         (parents (yas/table-parents table)))
-    (mapc #'(lambda (parent)
-              (define-key menu-keymap
-                (vector (intern (concat "parent_shit_" (yas/table-name parent))))
-                (list 'menu-item
-                      (concat "parent-table: "
-                              (yas/table-name parent))
-                      (yas/menu-keymap-get-create parent))))
-          parents)
+    (mapc #'yas/menu-keymap-get-create parents)
+    (define-key yas/minor-mode-menu (vector mode)
+        `(menu-item ,(symbol-name mode) ,menu-keymap
+                    :visible (yas/show-menu-p ',mode)))
     menu-keymap))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Template-related and snippet loading functions
 
-(defun yas/parse-template (&optional file group)
+(defun yas/parse-template (&optional file)
   "Parse the template in the current buffer.
 
 Optional FILE is the absolute file name of the file being
@@ -1293,30 +1335,24 @@ otherwise we attempt to calculate it from FILE.
 
 Return a snippet-definition, i.e. a list
 
- (KEY TEMPLATE NAME CONDITION GROUP VARS FILE KEYBINDING UID)
+ (KEY TEMPLATE NAME CONDITION GROUP VARS FILE KEYBINDING UUID)
 
-If the buffer contains a line of \"# --\" then the contents
-above this line are ignored. Variables can be set above this
-line through the syntax:
+If the buffer contains a line of \"# --\" then the contents above
+this line are ignored. Directives can set most of these with the syntax:
 
-#name : value
+# directive-name : directive-value
 
-Here's a list of currently recognized variables:
+Here's a list of currently recognized directives:
 
  * type
  * name
  * contributor
  * condition
+ * group
  * key
  * expand-env
  * binding
- * uid
-
-#name: #include \"...\"
-# --
-#include \"$1\""
-  ;;
-  ;;
+ * uuid"
   (goto-char (point-min))
   (let* ((type 'snippet)
          (name (and file
@@ -1327,12 +1363,11 @@ Here's a list of currently recognized variables:
          template
          bound
          condition
-         (group (or group
-                    (and file
-                         (yas/calculate-group file))))
+         (group (and file
+                     (yas/calculate-group file)))
          expand-env
          binding
-         uid)
+         uuid)
     (if (re-search-forward "^# --\n" nil t)
         (progn (setq template
                      (buffer-substring-no-properties (point)
@@ -1340,8 +1375,8 @@ Here's a list of currently recognized variables:
                (setq bound (point))
                (goto-char (point-min))
                (while (re-search-forward "^# *\\([^ ]+?\\) *: *\\(.*\\)$" bound t)
-                 (when (string= "uid" (match-string-no-properties 1))
-                   (setq uid (match-string-no-properties 2)))
+                 (when (string= "uuid" (match-string-no-properties 1))
+                   (setq uuid (match-string-no-properties 2)))
                  (when (string= "type" (match-string-no-properties 1))
                    (setq type (if (string= "command" (match-string-no-properties 2))
                                   'command
@@ -1353,7 +1388,7 @@ Here's a list of currently recognized variables:
                  (when (string= "condition" (match-string-no-properties 1))
                    (setq condition (yas/read-lisp (match-string-no-properties 2))))
                  (when (string= "group" (match-string-no-properties 1))
-                   (message "[yas] Warning: the \"# group:\" is no longer supported!"))
+                   (setq group (match-string-no-properties 2)))
                  (when (string= "expand-env" (match-string-no-properties 1))
                    (setq expand-env (yas/read-lisp (match-string-no-properties 2)
                                                    'nil-on-error)))
@@ -1363,7 +1398,9 @@ Here's a list of currently recognized variables:
             (buffer-substring-no-properties (point-min) (point-max))))
     (when (eq type 'command)
       (setq template (yas/read-lisp (concat "(progn" template ")"))))
-    (list key template name condition group expand-env file binding uid)))
+    (when group
+      (setq group (split-string group "\\.")))
+    (list key template name condition group expand-env file binding uuid)))
 
 (defun yas/calculate-group (file)
   "Calculate the group for snippet file path FILE."
@@ -1387,7 +1424,7 @@ Here's a list of currently recognized variables:
   (remove-if (lambda (file)
                (or (string-match "^\\."
                                  (file-name-nondirectory file))
-                   (string-match "^#"
+                   (string-match "^#.*#$"
                                  (file-name-nondirectory file))
                    (string-match "~$"
                                  (file-name-nondirectory file))
@@ -1397,20 +1434,20 @@ Here's a list of currently recognized variables:
              (directory-files directory t)))
 
 (defun yas/make-menu-binding (template)
-  (let ((mode (intern (yas/table-name (yas/template-table template))))) 
-    `(lambda () (interactive) (yas/expand-or-visit-from-menu ',mode ,(yas/template-uid template)))))
+  (let ((mode (intern (yas/table-name (yas/template-table template)))))
+    `(lambda () (interactive) (yas/expand-or-visit-from-menu ',mode ,(yas/template-uuid template)))))
 
-(defun yas/expand-or-visit-from-menu (mode uid)
+(defun yas/expand-or-visit-from-menu (mode uuid)
   (let* ((table (yas/table-get-create mode))
-         (template (and table
-                        (gethash uid (yas/table-uidhash table)))))
-    (when template
+         (yas/current-template (and table
+                                    (gethash uuid (yas/table-uuidhash table)))))
+    (when yas/current-template
       (if yas/visit-from-menu
-          (yas/visit-snippet-file-1 template)
-        (let ((where (if mark-active
+          (yas/visit-snippet-file-1 yas/current-template)
+        (let ((where (if (region-active-p)
                          (cons (region-beginning) (region-end))
                        (cons (point) (point)))))
-          (yas/expand-snippet (yas/template-content template)
+          (yas/expand-snippet (yas/template-content yas/current-template)
                               (car where)
                               (cdr where)))))))
 
@@ -1422,11 +1459,17 @@ Here's a list of currently recognized variables:
 
 TEMPLATES is a list of `yas/template'."
   (when templates
-    (some #'(lambda (fn)
-              (funcall fn (or prompt "Choose a snippet: ")
-                       templates
-                       #'yas/template-name))
-          yas/prompt-functions)))
+    (setq templates
+          (sort templates #'(lambda (t1 t2)
+                              (< (length (yas/template-name t1))
+                                 (length (yas/template-name t2))))))
+    (if yas/x-pretty-prompt-templates
+        (yas/x-pretty-prompt-templates "Choose a snippet" templates)
+      (some #'(lambda (fn)
+                (funcall fn (or prompt "Choose a snippet: ")
+                         templates
+                         #'yas/template-name))
+            yas/prompt-functions))))
 
 (defun yas/prompt-for-keys (keys &optional prompt)
   "Interactively choose a template key from the list KEYS."
@@ -1444,67 +1487,109 @@ TEMPLATES is a list of `yas/template'."
           yas/prompt-functions)))
 
 (defun yas/x-prompt (prompt choices &optional display-fn)
+  "Display choices in a x-window prompt."
+  ;; FIXME: HACK: if we notice that one of the objects in choices is
+  ;; actually a `yas/template', defer to `yas/x-prompt-pretty-templates'
+  ;;
+  ;; This would be better implemented by passing CHOICES as a
+  ;; strucutred tree rather than a list. Modifications would go as far
+  ;; up as `yas/all-templates' I think.
+  ;;
   (when (and window-system choices)
-    (let ((keymap (cons 'keymap
-                        (cons
-                         prompt
-                         (mapcar (lambda (choice)
-                                   (list choice
-                                         'menu-item
-                                         (if display-fn
-                                             (funcall display-fn choice)
-                                           choice)
-                                         t))
-                                 choices)))))
-      (when (cdr keymap)
-        (car (x-popup-menu (if (fboundp 'posn-at-point)
+    (let ((chosen
+           (let (menu d) ;; d for display
+             (dolist (c choices)
+               (setq d (or (and display-fn (funcall display-fn c))
+                           c))
+               (cond ((stringp d)
+                      (push (cons (concat "   " d) c) menu))
+                     ((listp d)
+                      (push (car d) menu))))
+             (setq menu (list prompt (push "title" menu)))
+             (x-popup-menu (if (fboundp 'posn-at-point)
                                (let ((x-y (posn-x-y (posn-at-point (point)))))
                                  (list (list (+ (car x-y) 10)
                                              (+ (cdr x-y) 20))
                                        (selected-window)))
                              t)
-                           keymap))))))
+                           menu))))
+      (or chosen
+          (keyboard-quit)))))
+
+(defvar yas/x-pretty-prompt-templates nil
+  "If non-nil, attempt to prompt for templates like TextMate.")
+(defun yas/x-pretty-prompt-templates (prompt templates)
+  "Display TEMPLATES, grouping neatly by table name."
+  (let ((pretty-alist (list))
+        menu
+        more-than-one-table
+        prefix)
+    (dolist (tl templates)
+      (aput 'pretty-alist (yas/template-table tl) (cons tl (aget pretty-alist (yas/template-table tl)))))
+    (setq more-than-one-table (> (length pretty-alist) 1))
+    (setq prefix (if more-than-one-table
+                     "   " ""))
+    (dolist (table-and-templates pretty-alist)
+      (when (cdr table-and-templates)
+        (if more-than-one-table
+            (push (yas/table-name (car table-and-templates)) menu))
+        (dolist (template (cdr table-and-templates))
+          (push (cons (concat prefix (yas/template-name template))
+                      template) menu))))
+    (setq menu (nreverse menu))
+    (or (x-popup-menu (if (fboundp 'posn-at-point)
+                          (let ((x-y (posn-x-y (posn-at-point (point)))))
+                            (list (list (+ (car x-y) 10)
+                                        (+ (cdr x-y) 20))
+                                  (selected-window)))
+                        t)
+                      (list prompt (push "title" menu)))
+        (keyboard-quit))))
 
 (defun yas/ido-prompt (prompt choices &optional display-fn)
   (when (and (featurep 'ido)
              ido-mode)
-    (let* ((formatted-choices (or (and display-fn
-                                       (mapcar display-fn choices))
-                                  choices))
-           (chosen (and formatted-choices
-                        (ido-completing-read prompt
-                                             formatted-choices
-                                             nil
-                                             'require-match
-                                             nil
-                                             nil))))
-      (when chosen
-        (nth (position chosen formatted-choices :test #'string=) choices)))))
+    (yas/completing-prompt prompt choices display-fn #'ido-completing-read)))
 
 (eval-when-compile (require 'dropdown-list nil t))
 (defun yas/dropdown-prompt (prompt choices &optional display-fn)
   (when (featurep 'dropdown-list)
-    (let* ((formatted-choices (or (and display-fn
-                                       (mapcar display-fn choices))
-                                  choices))
-           (chosen (and formatted-choices
+    (let (formatted-choices
+          filtered-choices
+          chosen
+          d)
+      (dolist (choice choices)
+        (setq d (or (and display-fn (funcall display-fn choice))
+                      choice))
+        (when (stringp d)
+          (push d formatted-choices)
+          (push choice filtered-choices)))
+      (setq chosen (and formatted-choices
                         (nth (dropdown-list formatted-choices)
-                             choices))))
-      chosen)))
+                             filtered-choices))))))
 
-(defun yas/completing-prompt (prompt choices &optional display-fn)
-  (let* ((formatted-choices (or (and display-fn
-                                     (mapcar display-fn choices))
-                                choices))
-         (chosen (and formatted-choices
-                      (completing-read prompt
-                                       formatted-choices
-                                       nil
-                                       'require-match
-                                       nil
-                                       nil))))
+(defun yas/completing-prompt (prompt choices &optional display-fn completion-fn)
+  (let (formatted-choices
+        filtered-choices
+        chosen
+        d
+        (completion-fn (or completion-fn
+                           #'completing-read)))
+    (dolist (choice choices)
+      (setq d (or (and display-fn (funcall display-fn choice))
+                    choice))
+      (when (stringp d)
+        (push d formatted-choices)
+        (push choice filtered-choices)))
+    (setq chosen (and formatted-choices
+                      (funcall completion-fn prompt
+                               formatted-choices
+                               nil
+                               'require-match
+                               nil
+                               nil)))
     (when chosen
-      (nth (position chosen formatted-choices :test #'string=) choices))))
+      (nth (position chosen formatted-choices :test #'string=) filtered-choices))))
 
 (defun yas/no-prompt (prompt choices &optional display-fn)
   (first choices))
@@ -1527,12 +1612,15 @@ TEMPLATES is a list of `yas/template'."
   (unless (file-exists-p (concat directory "/" ".yas-skip"))
     (let* ((major-mode-and-parents (if mode-sym
                                        (cons mode-sym parents)
-                                     (yas/compute-major-mode-and-parents (concat directory "/dummy"))))
-           (yas/ignore-filenames-as-triggers (or yas/ignore-filenames-as-triggers
-                                                 (file-exists-p (concat directory "/" ".yas-ignore-filenames-as-triggers"))))
+                                     (yas/compute-major-mode-and-parents (concat directory
+                                                                                 "/dummy"))))
+           (yas/ignore-filenames-as-triggers
+            (or yas/ignore-filenames-as-triggers
+                (file-exists-p (concat directory "/"
+                                       ".yas-ignore-filenames-as-triggers"))))
            (snippet-defs nil))
       ;; load the snippet files
-      ;; 
+      ;;
       (with-temp-buffer
         (dolist (file (yas/subdirs directory 'no-subdirs-just-files))
           (when (file-readable-p file)
@@ -1544,7 +1632,7 @@ TEMPLATES is a list of `yas/template'."
                              snippet-defs
                              (cdr major-mode-and-parents)))
       ;; now recurse to a lower level
-      ;; 
+      ;;
       (dolist (subdir (yas/subdirs directory))
         (yas/load-directory-1 subdir
                               (car major-mode-and-parents)
@@ -1567,16 +1655,14 @@ content of the file is the template."
   (when (interactive-p)
     (message "[yas] Loaded snippets from %s." directory)))
 
-(defun yas/load-snippet-dirs () 
-  "Reload the directories listed in `yas/snippet-dirs' or 
-   prompt the user to select one." 
+(defun yas/load-snippet-dirs ()
+  "Reload the directories listed in `yas/snippet-dirs' or
+   prompt the user to select one."
   (if yas/snippet-dirs
-      (if (listp yas/snippet-dirs) 
-          (dolist (directory (reverse yas/snippet-dirs)) 
-            (yas/load-directory directory)) 
-        (yas/load-directory yas/snippet-dirs)) 
-    (call-interactively 'yas/load-directory))) 
- 
+      (dolist (directory (reverse (yas/snippet-dirs)))
+        (yas/load-directory directory))
+    (call-interactively 'yas/load-directory)))
+
 (defun yas/reload-all (&optional reset-root-directory)
   "Reload all snippets and rebuild the YASnippet menu. "
   (interactive "P")
@@ -1603,12 +1689,7 @@ content of the file is the template."
     ;; Reload the directories listed in `yas/snippet-dirs' or prompt
     ;; the user to select one.
     ;;
-    (if yas/snippet-dirs
-        (if (listp yas/snippet-dirs)
-            (dolist (directory (reverse yas/snippet-dirs))
-              (yas/load-directory directory))
-          (yas/load-directory yas/snippet-dirs))
-      (call-interactively 'yas/load-directory))
+    (yas/load-snippet-dirs)
     ;; Reload the direct keybindings
     ;;
     (yas/direct-keymaps-reload)
@@ -1664,8 +1745,9 @@ Here's the default value for all the parameters:
                         (require 'yasnippet-bundle)`\"
                       \"dropdown-list.el\")
 "
-  (interactive "ffind the yasnippet.el file: \nFTarget bundle file: \nDSnippet directory to bundle: \nMExtra code? \nfdropdown-library: ")
-  
+  (interactive (concat "ffind the yasnippet.el file: \nFTarget bundle file: "
+                       "\nDSnippet directory to bundle: \nMExtra code? \nfdropdown-library: "))
+
   (let* ((yasnippet (or yasnippet
                         "yasnippet.el"))
          (yasnippet-bundle (or yasnippet-bundle
@@ -1708,9 +1790,9 @@ Here's the default value for all the parameters:
                         (condition              (fourth  snippet))
                         (group                  (fifth   snippet))
                         (expand-env             (sixth   snippet))
-                        (file                   nil) ;; (seventh snippet)) ;; omit on purpose 
+                        (file                   nil) ;; (seventh snippet)) ;; omit on purpose
                         (binding                (eighth  snippet))
-                        (uid                    (ninth   snippet)))
+                        (uuid                    (ninth   snippet)))
                     (push `(,key
                             ,template-content
                             ,name
@@ -1719,7 +1801,7 @@ Here's the default value for all the parameters:
                             ,expand-env
                             ,file
                             ,binding
-                            ,uid)
+                            ,uuid)
                           literal-snippets)))
                 (insert (pp-to-string `(yas/define-snippets ',mode ',literal-snippets ',parent-or-parents)))
                 (insert "\n\n"))))
@@ -1738,14 +1820,14 @@ Here's the default value for all the parameters:
       ;; bundle-specific provide and value for yas/dont-activate
       (let ((bundle-feature-name (file-name-nondirectory
                                   (file-name-sans-extension
-                                   yasnippet-bundle)))) 
+                                   yasnippet-bundle))))
         (insert (pp-to-string `(set-default 'yas/dont-activate
                                             #'(lambda ()
                                                 (and (or yas/snippet-dirs
                                                          (featurep ',(make-symbol bundle-feature-name)))
                                                      (null (yas/get-snippet-tables)))))))
         (insert (pp-to-string `(provide ',(make-symbol bundle-feature-name)))))
-      
+
       (insert ";;; "
               (file-name-nondirectory yasnippet-bundle)
               " ends here\n"))))
@@ -1776,7 +1858,7 @@ Here's the default value for all the parameters:
 SNIPPETS is a list of snippet definitions, each taking the
 following form
 
- (KEY TEMPLATE NAME CONDITION GROUP EXPAND-ENV FILE KEYBINDING UID)
+ (KEY TEMPLATE NAME CONDITION GROUP EXPAND-ENV FILE KEYBINDING UUID)
 
 Within these, only KEY and TEMPLATE are actually mandatory.
 
@@ -1792,8 +1874,8 @@ The remaining elements are strings.
 FILE is probably of very little use if you're programatically
 defining snippets.
 
-UID is the snippets \"unique-id\". Loading a second snippet file
-with the same uid replaced the previous snippet.
+UUID is the snippets \"unique-id\". Loading a second snippet file
+with the same uuid replaced the previous snippet.
 
 You can use `yas/parse-template' to return such lists based on
 the current buffers contents.
@@ -1809,7 +1891,7 @@ not need to be a real mode."
                                (if (listp parent-mode)
                                    parent-mode
                                  (list parent-mode))))
-        (menu-keymap nil))
+        (template nil))
     ;; X) Connect `snippet-table' with `parent-tables'.
     ;;
     ;; TODO: this should be a remove-duplicates of the concatenation
@@ -1817,24 +1899,17 @@ not need to be a real mode."
     ;;
     (dolist (parent parent-tables)
       (unless (find parent (yas/table-parents snippet-table))
-        (push (yas/table-parents snippet-table)
-              parent)))
-    
-    ;; X) The keymap created here here is the menu keymap, it is also
-    ;;    gotten/created according to MODE.  Make a menu entry for
-    ;;    mode
-    ;; 
-    (when yas/use-menu
-      (setq menu-keymap (yas/menu-keymap-get-create snippet-table))
-      (define-key yas/minor-mode-menu (vector mode)
-        `(menu-item ,(symbol-name mode) ,menu-keymap
-                    :visible (yas/show-menu-p ',mode))))
+        (push parent
+              (yas/table-parents snippet-table))))
+
     ;; X) Now, iterate for evey snippet def list
     ;;
     (dolist (snippet snippets)
-      (yas/define-snippets-1 mode snippet snippet-table menu-keymap))))
+      (setq template (yas/define-snippets-1 snippet
+                                            snippet-table)))
+    template))
 
-(defun yas/define-snippets-1 (mode snippet snippet-table menu-keymap)
+(defun yas/define-snippets-1 (snippet snippet-table)
   "Helper for `yas/define-snippets'."
   ;; X) Calculate some more defaults on the values returned by
   ;; `yas/parse-template'.
@@ -1842,7 +1917,7 @@ not need to be a real mode."
   (let* ((file (seventh snippet))
          (key (or (car snippet)
                   (unless yas/ignore-filenames-as-triggers
-                    (and file 
+                    (and file
                          (file-name-sans-extension (file-name-nondirectory file))))))
          (name (or (third snippet)
                    (and file
@@ -1850,11 +1925,10 @@ not need to be a real mode."
          (condition (fourth snippet))
          (group (fifth snippet))
          (keybinding (yas/read-keybinding (eighth snippet)))
-         (uid (or (ninth snippet)
+         (uuid (or (ninth snippet)
                   name))
-         (template (or (gethash uid (yas/table-uidhash snippet-table))
+         (template (or (gethash uuid (yas/table-uuidhash snippet-table))
                        (yas/make-blank-template))))
-
     ;; X) populate the template object
     ;;
     (yas/populate-template template
@@ -1862,43 +1936,21 @@ not need to be a real mode."
                            :key         key
                            :content     (second snippet)
                            :name        (or name key)
+                           :group       group
                            :condition   condition
                            :expand-env  (sixth snippet)
                            :file        (seventh snippet)
                            :keybinding  keybinding
-                           :uid         uid)
-    ;; X) setup the menu groups, reorganizing from group to group if
-    ;;    necessary
-    ;;
-    (when (and yas/use-menu
-               (not (cdr (yas/template-menu-binding-pair template))))
-      (let ((group-keymap menu-keymap))
-        ;; Delete this entry from another group if already exists
-        ;; in some other group. An entry is considered as existing
-        ;; in another group if its name string-matches.
-        ;;
-        (yas/delete-from-keymap group-keymap name)
-
-        ;; ... then add this entry to the correct group
-        (when (and (not (null group))
-                   (not (string= "" group)))
-          (dolist (subgroup (mapcar #'make-symbol
-                                    (split-string group "\\.")))
-            (let ((subgroup-keymap (lookup-key group-keymap
-                                               (vector subgroup))))
-              (when (null subgroup-keymap)
-                (setq subgroup-keymap (make-sparse-keymap))
-                (define-key group-keymap (vector subgroup)
-                  `(menu-item ,(symbol-name subgroup)
-                              ,subgroup-keymap)))
-              (setq group-keymap subgroup-keymap))))
-        (let ((menu-binding-pair (yas/snippet-menu-binding-pair-get-create template)))
-          (define-key group-keymap (vector (gensym)) (car menu-binding-pair)))))
+                           :uuid         uuid)
     ;; X) Update this template in the appropriate table. This step
     ;;    also will take care of adding the key indicators in the
     ;;    templates menu entry, if any
     ;;
-    (yas/update-template snippet-table template)))
+    (yas/update-template snippet-table template)
+    ;; X) Return the template
+    ;;
+    ;;
+    template))
 
 (defun yas/snippet-menu-binding-pair-get-create (template &optional type)
   "Get TEMPLATE's menu binding or assign it a new one."
@@ -1907,11 +1959,11 @@ not need to be a real mode."
             (keybinding (yas/template-keybinding template)))
         (setf (yas/template-menu-binding-pair template)
               (cons `(menu-item ,(or (yas/template-name template)
-                                     (yas/template-uid template))
+                                     (yas/template-uuid template))
                                 ,(yas/make-menu-binding template)
                                 :keys ,nil)
                     type)))))
-  
+
 (defun yas/show-menu-p (mode)
   (cond ((eq yas/use-menu 'abbreviate)
          (find mode
@@ -1921,79 +1973,92 @@ not need to be a real mode."
         ((eq yas/use-menu 'real-modes)
          (yas/real-mode? mode))
         (t
-         t))) 
+         t)))
 
-(defun yas/delete-from-keymap (keymap name)
-  "Recursively delete items named NAME from KEYMAP and its submenus.
+(defun yas/delete-from-keymap (keymap uuid)
+  "Recursively delete items with UUID from KEYMAP and its submenus."
 
-Skip any submenus named \"parent mode\""
+  ;; XXX: This used to skip any submenus named \"parent mode\"
+  ;; 
   ;; First of all, recursively enter submenus, i.e. the tree is
   ;; searched depth first so that stale submenus can be found in the
   ;; higher passes.
   ;;
   (mapc #'(lambda (item)
-            (when (and (keymapp (fourth item))
-                       (stringp (third item))
-                       (not (string-match "parent mode" (third item))))
-              (yas/delete-from-keymap (fourth item) name)))
+            (when (and (listp (cdr item))
+                       (keymapp (third (cdr item))))
+              (yas/delete-from-keymap (third (cdr item)) uuid)))
         (rest keymap))
-  ;;
-  (when (keymapp keymap)
-    (let ((pos-in-keymap))
-      (while (setq pos-in-keymap
-                   (position-if #'(lambda (item)
-                                    (and (listp item)
-                                         (or
-                                          ;; the menu item we want to delete
-                                          (and (eq 'menu-item (second item))
-                                               (third item)
-                                               (and (string= (third item) name)))
-                                          ;; a stale subgroup
-                                          (and (keymapp (fourth item))
-                                               (not (and (stringp (third item))
-                                                         (string-match "parent mode"
-                                                                       (third item))))
-                                               (null (rest (fourth item)))))))
-                                keymap))
-        (setf (nthcdr pos-in-keymap keymap)
-              (nthcdr (+ 1 pos-in-keymap) keymap))))))
+  ;; Set the uuid entry to nil
+  ;; 
+  (define-key keymap (vector (make-symbol uuid)) nil)
+  ;; Destructively modify keymap
+  ;; 
+  (setcdr keymap (delete-if #'(lambda (item)
+                                (or (null (cdr item))
+                                    (and (keymapp (third (cdr item)))
+                                         (null (cdr (third (cdr item)))))))
+                            (rest keymap))))
 
-(defun yas/define-menu (mode menu)
-  (let ((table (yas/table-get-create mode)))
+(defun yas/define-menu (mode menu omit-items)
+  "Define a snippet menu for MODE according to MENU, ommitting OMIT-ITEMS.
+
+MENU is a list, its elements can be:
+
+- (yas/item UUID) : Creates an entry the snippet identified with
+  UUID. The menu entry for a snippet thus identified is
+  permanent, i.e. it will never move in the menu.
+
+- (yas/separator) : Creates a separator
+
+- (yas/submenu NAME SUBMENU) : Creates a submenu with NAME,
+  SUBMENU has the same form as MENU. NAME is also added to the
+  list of groups of the snippets defined thereafter.
+
+OMIT-ITEMS is a list of snippet uuid's that will always be
+ommited from MODE's menu, even if they're manually loaded.
+"
+  (let* ((table (yas/table-get-create mode))
+         (hash (yas/table-uuidhash table)))
     (yas/define-menu-1 table
                        (yas/menu-keymap-get-create table)
                        menu
-                       (yas/table-uidhash table))))
+                       hash)
+    (dolist (uuid omit-items)
+      (let ((template (or (gethash uuid hash)
+                          (yas/populate-template (puthash uuid
+                                                          (yas/make-blank-template)
+                                                          hash)
+                                                 :table table
+                                                 :uuid uuid))))
+        (setf (yas/template-menu-binding-pair template) (cons nil :none))))))
 
-(defun yas/define-menu-1 (table keymap menu uidhash)
+(defun yas/define-menu-1 (table keymap menu uuidhash &optional group-list)
   (dolist (e (reverse menu))
     (cond ((eq (first e) 'yas/item)
-           (let ((template (or (gethash (second e) uidhash)
+           (let ((template (or (gethash (second e) uuidhash)
                                (yas/populate-template (puthash (second e)
                                                                (yas/make-blank-template)
-                                                               uidhash)
+                                                               uuidhash)
                                                       :table table
-                                                      :uid (second e)))))
-             (define-key keymap (vector (gensym))
-               ;; '(menu-item "shit" 'ding)
+                                                      :perm-group group-list
+                                                      :uuid (second e)))))
+             (define-key keymap (vector (make-symbol (second e)))
                (car (yas/snippet-menu-binding-pair-get-create template :stay)))))
           ((eq (first e) 'yas/submenu)
            (let ((subkeymap (make-sparse-keymap)))
-             (define-key keymap (vector (make-symbol (second e)))
+             (define-key keymap (vector (make-symbol(second e)))
                `(menu-item ,(second e) ,subkeymap))
-             (yas/define-menu-1 table subkeymap (third e) uidhash)))
+             (yas/define-menu-1 table
+                                subkeymap
+                                (third e)
+                                uuidhash
+                                (append group-list (list (second e))))))
           ((eq (first e) 'yas/separator)
            (define-key keymap (vector (gensym))
              '(menu-item "----")))
-          ((eq (first e) 'yas/omit)
-           (dolist (uid (rest e))
-             (let ((template (or (gethash uid uidhash)
-                                 (yas/populate-template (puthash uid
-                                                                 (yas/make-blank-template)
-                                                                 uidhash)
-                                                        :table table
-                                                        :uid uid))))
-               (setf (yas/template-menu-binding-pair template) (cons nil :none))))))))
+          (t
+           (message "[yas] don't know anything about menu entry %s" (first e))))))
 
 (defun yas/define (mode key template &optional name condition group)
   "Define a snippet.  Expanding KEY into TEMPLATE.
@@ -2057,7 +2122,8 @@ object satisfying `yas/field-p' to restrict the expansion to."
   (setq yas/condition-cache-timestamp (current-time))
   (multiple-value-bind (templates start end) (if field
                                                  (save-restriction
-                                                   (narrow-to-region (yas/field-start field) (yas/field-end field))
+                                                   (narrow-to-region (yas/field-start field)
+                                                                     (yas/field-end field))
                                                    (yas/current-key))
                                                (yas/current-key))
     (if templates
@@ -2078,21 +2144,21 @@ If expansion fails, execute the previous binding for this key"
         (yas/expand-or-prompt-for-template templates)
       (let ((yas/fallback-behavior 'call-other-command))
         (yas/fallback)))))
-    
+
 (defun yas/expand-or-prompt-for-template (templates &optional start end)
   "Expand one of TEMPLATES from START to END.
 
 Prompt the user if TEMPLATES has more than one element, else
 expand immediately. Common gateway for
 `yas/expand-from-trigger-key' and `yas/expand-from-keymap'."
-  (let ((template (or (and (rest templates) ;; more than one
-                           (yas/prompt-for-template (mapcar #'cdr templates)))
-                      (cdar templates))))
-    (when template
-      (yas/expand-snippet (yas/template-content template)
+  (let ((yas/current-template (or (and (rest templates) ;; more than one
+                                       (yas/prompt-for-template (mapcar #'cdr templates)))
+                                  (cdar templates))))
+    (when yas/current-template
+      (yas/expand-snippet (yas/template-content yas/current-template)
                           start
                           end
-                          (yas/template-expand-env template)))))
+                          (yas/template-expand-env yas/current-template)))))
 
 (defun yas/fallback (&optional from-trigger-key-p)
   "Fallback after expansion has failed.
@@ -2109,14 +2175,16 @@ Common gateway for `yas/expand-from-trigger-key' and
                 (keys-2 (and yas/trigger-key
                              from-trigger-key-p
                              (stringp yas/trigger-key)
-                             (read-kbd-macro yas/trigger-key))) 
+                             (read-kbd-macro yas/trigger-key)))
                 (command-1 (and keys-1 (key-binding keys-1)))
                 (command-2 (and keys-2 (key-binding keys-2)))
                 ;; An (ugly) safety: prevents infinite recursion of
                 ;; yas/expand* calls.
-                (command (or (and (not (string-match "yas/expand" (symbol-name command-1)))
+                (command (or (and (symbolp command-1)
+                                  (not (string-match "yas/expand" (symbol-name command-1)))
                                   command-1)
-                             command-2)))
+                             (and (symbolp command-2)
+                                  command-2))))
            (when (and (commandp command)
                       (not (string-match "yas/expand" (symbol-name command))))
              (setq this-command command)
@@ -2133,7 +2201,7 @@ Common gateway for `yas/expand-from-trigger-key' and
         (t
          ;; also return nil if all the other fallbacks have failed
          nil)))
-    
+
 
 
 ;;; Snippet development
@@ -2168,18 +2236,18 @@ by condition."
                                               'always)
                                          yas/buffer-local-condition))
          (templates (yas/all-templates (yas/get-snippet-tables)))
-         (template (and templates
-                        (or (and (rest templates) ;; more than one template for same key
-                                 (yas/prompt-for-template templates))
-                            (car templates))))
-         (where (if mark-active
+         (yas/current-template (and templates
+                                    (or (and (rest templates) ;; more than one template for same key
+                                             (yas/prompt-for-template templates))
+                                        (car templates))))
+         (where (if (region-active-p)
                     (cons (region-beginning) (region-end))
                   (cons (point) (point)))))
-    (if template
-        (yas/expand-snippet (yas/template-content template)
+    (if yas/current-template
+        (yas/expand-snippet (yas/template-content yas/current-template)
                             (car where)
                             (cdr where)
-                            (yas/template-expand-env template))
+                            (yas/template-expand-env yas/current-template))
       (message "[yas] No snippets can be inserted here!"))))
 
 (defun yas/visit-snippet-file ()
@@ -2191,20 +2259,20 @@ visited file in `snippet-mode'."
   (let* ((yas/buffer-local-condition 'always)
          (templates (yas/all-templates (yas/get-snippet-tables)))
          (template (and templates
-                        (or (and (rest templates) ;; more than one template for same key
-                                 (yas/prompt-for-template templates
-                                                          "Choose a snippet template to edit: "))
+                        (or (yas/prompt-for-template templates
+                                                     "Choose a snippet template to edit: ")
                             (car templates)))))
 
-    (when template
-      (yas/visit-snippet-file-1 template))))
+    (if template
+        (yas/visit-snippet-file-1 template)
+      (message "No snippets tables active!"))))
 
 (defun yas/visit-snippet-file-1 (template)
   (let ((file (yas/template-file template)))
     (cond ((and file (file-readable-p file))
            (find-file-other-window file)
            (snippet-mode)
-           (setq yas/current-template template))
+           (set (make-local-variable 'yas/editing-template) template))
           (file
            (message "Original file %s no longer exists!" file))
           (t
@@ -2226,7 +2294,7 @@ visited file in `snippet-mode'."
                          (pp-to-string (yas/template-content template))
                        (yas/template-content template))))
            (snippet-mode)
-           (setq yas/current-template template)))))
+           (set (make-local-variable 'yas/editing-template) template)))))
 
 (defun yas/guess-snippet-directories-1 (table)
   "Guesses possible snippet subdirectories for TABLE."
@@ -2240,28 +2308,22 @@ visited file in `snippet-mode'."
   "Try to guess suitable directories based on the current active
 tables (or optional TABLE).
 
-Returns a a list of options alist TABLE -> DIRS where DIRS are
-all the possibly directories where snippets of table might be
-lurking."
+Returns a list of elemts (TABLE . DIRS) where TABLE is a
+`yas/table' object and DIRS is a list of all possible directories
+where snippets of table might exist."
   (let ((main-dir (replace-regexp-in-string
                    "/+$" ""
-                   (or (and (listp yas/snippet-dirs)
-                            (first yas/snippet-dirs))
-                       yas/snippet-dirs
-                       (setq yas/snippet-dirs "~/.emacs.d/snippets"))))
+                   (or (first (or (yas/snippet-dirs)
+                                  (setq yas/snippet-dirs '("~/.emacs.d/snippets")))))))
         (tables (or (and table
                          (list table))
                     (yas/get-snippet-tables))))
-    ;; HACK! the snippet table created here is a dummy table that
-    ;; holds the correct name so that `yas/make-directory-maybe' can
-    ;; work. The real table, if it does not exist in
-    ;; yas/tables will be created when the first snippet for
-    ;; that mode is loaded.
-    ;; 
+    ;; HACK! the snippet table created here is actually registered!
+    ;;
     (unless (or table (gethash major-mode yas/tables))
-      (setq tables (cons (yas/make-snippet-table (symbol-name major-mode))
-                         tables)))
-    
+      (push (yas/table-get-create major-mode)
+            tables))
+
     (mapcar #'(lambda (table)
                 (cons table
                       (mapcar #'(lambda (subdir)
@@ -2293,13 +2355,14 @@ lurking."
   ""
   (interactive "P")
   (let ((guessed-directories (yas/guess-snippet-directories)))
-    
-    (switch-to-buffer (format "*new snippet for %s*"
-                              (if guessed-directories
-                                  (yas/table-name (car (first guessed-directories)))
-                                "unknown mode")))
+
+    (switch-to-buffer "*new snippet*")
+    (erase-buffer)
+    (kill-all-local-variables)
     (snippet-mode)
-    (setq yas/guessed-directories guessed-directories)
+    (set (make-local-variable 'yas/guessed-modes) (mapcar #'(lambda (d)
+                                                              (intern (yas/table-name (car d))))
+                                                          guessed-directories))
     (unless (and choose-instead-of-guess
                  (not (y-or-n-p "Insert a snippet with useful headers? ")))
       (yas/expand-snippet "\
@@ -2313,7 +2376,7 @@ lurking."
 $0"))))
 
 (defun yas/find-snippets (&optional same-window )
-  "Look for user snippets in guessed current mode's directory.
+  "Find snippet file in guessed current mode's directory.
 
 Calls `find-file' interactively in the guessed directory.
 
@@ -2322,7 +2385,7 @@ With prefix arg SAME-WINDOW opens the buffer in the same window.
 Because snippets can be loaded from many different locations,
 this has to guess the correct directory using
 `yas/guess-snippet-directories', which returns a list of
-options. 
+options.
 
 If any one of these exists, it is taken and `find-file' is called
 there, otherwise, proposes to create the first option returned by
@@ -2341,9 +2404,7 @@ there, otherwise, proposes to create the first option returned by
                              (rest guessed-directories)))))
     (unless chosen
       (when (y-or-n-p "Having trouble... go to snippet root dir? ")
-        (setq chosen (if (listp yas/snippet-dirs)
-                         (first yas/snippet-dirs)
-                       yas/snippet-dirs))))
+        (setq chosen (first (yas/snippet-dirs)))))
     (if chosen
         (let ((default-directory chosen))
           (setq buffer (call-interactively (if same-window
@@ -2358,7 +2419,11 @@ there, otherwise, proposes to create the first option returned by
 
 (defun yas/compute-major-mode-and-parents (file &optional prompt-if-failed)
   (let* ((file-dir (and file
-                        (directory-file-name (or (locate-dominating-file file ".yas-make-groups")
+                        (directory-file-name (or (some #'(lambda (special)
+                                                           (locate-dominating-file file special))
+                                                       '(".yas-setup.el"
+                                                         ".yas-make-groups"
+                                                         ".yas-parents"))
                                                  (directory-file-name (file-name-directory file))))))
          (parents-file-name (concat file-dir "/.yas-parents"))
          (major-mode-name (and file-dir
@@ -2378,143 +2443,91 @@ there, otherwise, proposes to create the first option returned by
     (when major-mode-sym
       (cons major-mode-sym parents))))
 
-(defvar yas/current-template nil
+(defvar yas/editing-template nil
   "Supporting variable for `yas/load-snippet-buffer' and `yas/visit-snippet'")
-(make-variable-buffer-local 'yas/current-template)
 
-(defvar yas/guessed-directories nil
-  "Supporting variable for `yas/load-snippet-buffer' and `yas/new-snippet'")
-(make-variable-buffer-local 'yas/guessed-directories)
+(defvar yas/current-template nil
+  "Holds the current template being expanded into a snippet.")
+
+(defvar yas/guessed-modes nil
+  "List of guessed modes supporting `yas/load-snippet-buffer'.")
 
 (defun yas/load-snippet-buffer (&optional kill)
   "Parse and load current buffer's snippet definition.
 
 With optional prefix argument KILL quit the window and buffer."
   (interactive "P")
-  (cond
-   ;; X) Option 1: We have `yas/current-template', this buffer's
-   ;;  content comes from a template which is already loaded and
-   ;;  neatly positioned,...
-   ;;
-   ((and (boundp 'yas/current-template)
-         yas/current-template
-         (yas/template-p yas/current-template))
-         
-    (let ((parsed (yas/parse-template (yas/template-file yas/current-template))))
-      ;; ... just change its template, expand-env, condition, key,
-      ;; keybinding and name. The group cannot be changed.
-      (yas/populate-template yas/current-template
-                             :content    (second parsed)
-                             :key        (first parsed)
-                             :name       (third parsed)
-                             :condition  (fourth parsed)
-                             :expand-env (sixth parsed)
-                             :keybinding (yas/read-keybinding (eighth parsed)))
-      (yas/update-template (yas/template-table yas/current-template)
-                          yas/current-template))
-    ;; Now, prompt for new file creation much like
-    ;; `yas/new-snippet' if one of the following is true:
-    ;;
-    ;; 1) `yas/snippet-dirs' is a list and its first element does not
-    ;; match this template's file (i.e. this is a library snippet, not
-    ;; a user snippet).
-    ;;
-    ;; 2) yas/current-template comes from a file that we cannot write to...
-    ;;
-    (when (or (and (listp yas/snippet-dirs)
-                   (second yas/snippet-dirs)
-                   (not (string-match (expand-file-name (first yas/snippet-dirs))
-                                      (yas/template-file yas/current-template))))
-              (and (yas/template-file yas/current-template)
-                   (not (file-writable-p (yas/template-file yas/current-template))))
-              (not (yas/template-file yas/current-template)))
-      (when (y-or-n-p "[yas] Also save snippet buffer to new file? ")
-        (let* ((option (first (yas/guess-snippet-directories (yas/template-table yas/current-template))))
-               (chosen (and option
-                            (yas/make-directory-maybe option))))
-          (when chosen
-            (let ((default-file-name (or (and (yas/template-file yas/current-template)
-                                              (file-name-nondirectory (yas/template-file yas/current-template)))
-                                         (yas/template-name yas/current-template))))
-              (write-file (concat chosen "/"
-                                  (read-from-minibuffer (format "File name to create in %s? " chosen)
-                                                        default-file-name)))
-              (setf (yas/template-file yas/current-template) buffer-file-name))))))
-    (when kill
-      (quit-window kill))
-    (message "[yas] Snippet \"%s\" loaded for %s."
-             (yas/template-name yas/current-template)
-             (yas/table-name (yas/template-table yas/current-template))))
-   (;; X) Option 2: We have a file name, consider this a brand new
-    ;; snippet and calculate name, groups, etc from the current
-    ;; file-name and buffer content
-    ;;
-    buffer-file-name
-    (let ((major-mode-and-parent (yas/compute-major-mode-and-parents buffer-file-name)))
-      (if major-mode-and-parent
-          (let* ((yas/ignore-filenames-as-triggers (or yas/ignore-filenames-as-triggers
-                                                       (locate-dominating-file buffer-file-name ".yas-ignore-filenames-as-triggers")))
-                 (parsed (yas/parse-template buffer-file-name))
-                 (name (and parsed
-                            (third parsed))))
-            (when name
-              (yas/define-snippets (car major-mode-and-parent)
-                                   (list parsed)
-                                   (cdr major-mode-and-parent)))
-            (when (and (buffer-modified-p)
-                       (y-or-n-p "Also save snippet buffer? "))
-              (save-buffer))
-            (when kill
-              (quit-window kill))
-            (message "[yas] Snippet \"%s\" loaded for %s."
-                     name
-                     (car major-mode-and-parent)))
-        (message (format "[yas] Unknown major mode for snippet at %s" buffer-file-name)))))
-
-   ;; X) Option 3: We have `yas/guessed-directories', this
-   ;;  buffer's content comes from `yas/new-snippet' call. Prompt
-   ;;  user for dir and name in guessed dirs, then call
-   ;;  `yas/load-snippet-buffer' (ourselves) again to load the
-   ;;  snippet based on the file-name.
-   ;;
-   ((and (boundp 'yas/guessed-directories)
-         yas/guessed-directories)
-    (let* ((yas/prompt-functions '(yas/ido-prompt yas/completing-prompt))
-           (guessed-directories yas/guessed-directories)
-           (option (or (and (not (y-or-n-p "Let yasnippet guess tables? "))
-                            (first
-                             (yas/guess-snippet-directories 
-                              (some #'(lambda (fn)
-                                        (funcall fn "Choose any snippet table: "
-                                                 (let (res)
-                                                   (maphash #'(lambda (k v)
-                                                                (push v res))
-                                                            yas/tables)
-                                                   res)
-                                                 #'yas/table-name))
-                                    yas/prompt-functions))))
-                       (and (second guessed-directories)
-                            (some #'(lambda (fn)
-                                      (funcall fn "Choose from guessed list of tables: "
-                                               guessed-directories
-                                               #'(lambda (option)
-                                                   (yas/table-name (car option)))))
-                                  yas/prompt-functions))
-                       (first guessed-directories)))
-           (chosen))
-      (setq chosen (yas/make-directory-maybe option))
-
-      (unless chosen
-        (when (y-or-n-p "Having trouble... use snippet root dir? ")
-          (setq chosen (if (listp yas/snippet-dirs)
-                           (first yas/snippet-dirs)
-                         yas/snippet-dirs))))
-      (when chosen
-        (let ((default-directory chosen))
-          (call-interactively 'write-file))
-        (setq yas/guessed-directories nil)
-        (setq yas/current-template nil)
-        (yas/load-snippet-buffer))))))
+  (let ((yas/ignore-filenames-as-triggers
+         (or yas/ignore-filenames-as-triggers
+             (and buffer-file-name
+                  (locate-dominating-file
+                   buffer-file-name
+                   ".yas-ignore-filenames-as-triggers")))))
+    (cond
+     ;;  We have `yas/editing-template', this buffer's
+     ;;  content comes from a template which is already loaded and
+     ;;  neatly positioned,...
+     ;;
+     (yas/editing-template
+      (yas/define-snippets-1 (yas/parse-template (yas/template-file yas/editing-template)) 
+                             (yas/template-table yas/editing-template)))
+     ;; Try to use `yas/guessed-modes'. If we don't have that use the
+     ;; value from `yas/compute-major-mode-and-parents'
+     ;;
+     (t
+      (unless yas/guessed-modes
+        (set (make-local-variable 'yas/guessed-modes) (or (yas/compute-major-mode-and-parents buffer-file-name))))
+      (let* ((prompt (if (and (featurep 'ido)
+                              ido-mode)
+                         'ido-completing-read 'completing-read))
+             (table (yas/table-get-create
+                     (intern
+                      (funcall prompt (format "Choose or enter a table (yas guesses %s): "
+                                              (if yas/guessed-modes
+                                                  (first yas/guessed-modes)
+                                                "nothing"))
+                               (mapcar #'symbol-name yas/guessed-modes)
+                               nil
+                               nil
+                               nil
+                               nil
+                               (if (first yas/guessed-modes)
+                                   (symbol-name (first yas/guessed-modes))))))))
+        (set (make-local-variable 'yas/editing-template) 
+             (yas/define-snippets-1 (yas/parse-template buffer-file-name)
+                                    table))))))
+  ;; Now, offer to save this shit
+  ;;
+  ;; 1) if `yas/snippet-dirs' is a list and its first element does not
+  ;; match this template's file (i.e. this is a library snippet, not
+  ;; a user snippet).
+  ;;
+  ;; 2) yas/editing-template comes from a file that we cannot write to...
+  ;;
+  (when (or (not (yas/template-file yas/editing-template))
+            (not (file-writable-p (yas/template-file yas/editing-template)))
+            (and (listp yas/snippet-dirs)
+                 (second yas/snippet-dirs)
+                 (not (string-match (expand-file-name (first yas/snippet-dirs))
+                                    (yas/template-file yas/editing-template)))))
+    
+    (when (y-or-n-p "[yas] Looks like a library or new snippet. Save to new file? ")
+      (let* ((option (first (yas/guess-snippet-directories (yas/template-table yas/editing-template))))
+             (chosen (and option
+                          (yas/make-directory-maybe option))))
+        (when chosen
+          (let ((default-file-name (or (and (yas/template-file yas/editing-template)
+                                            (file-name-nondirectory (yas/template-file yas/editing-template)))
+                                       (yas/template-name yas/editing-template))))
+            (write-file (concat chosen "/"
+                                (read-from-minibuffer (format "File name to create in %s? " chosen)
+                                                      default-file-name)))
+            (setf (yas/template-file yas/editing-template) buffer-file-name))))))
+  (when kill
+    (quit-window kill))
+  (message "[yas] Snippet \"%s\" loaded for %s."
+           (yas/template-name yas/editing-template)
+           (yas/table-name (yas/template-table yas/editing-template))))
 
 
 (defun yas/tryout-snippet (&optional debug)
@@ -2525,30 +2538,36 @@ With optional prefix argument KILL quit the window and buffer."
          (test-mode (or (and (car major-mode-and-parent)
                              (fboundp (car major-mode-and-parent))
                              (car major-mode-and-parent))
+                        (first yas/guessed-modes)
                         (intern (read-from-minibuffer "[yas] please input a mode: "))))
-         (template (and parsed
-                        (fboundp test-mode)
-                        (yas/populate-template (yas/make-blank-template)
-                                               :table       nil ;; an ephemeral snippet has no table...
-                                               :key         (first parsed)
-                                               :content     (second parsed)
-                                               :name        (third parsed)
-                                               :expand-env  (sixth parsed)))))
-    (cond (template
-           (let ((buffer-name (format "*YAS TEST: %s*" (yas/template-name template))))
+         (yas/current-template
+          (and parsed
+               (fboundp test-mode)
+               (yas/populate-template (yas/make-blank-template)
+                                      :table       nil ;; no tables for ephemeral snippets
+                                      :key         (first parsed)
+                                      :content     (second parsed)
+                                      :name        (third parsed)
+                                      :expand-env  (sixth parsed)))))
+    (cond (yas/current-template
+           (let ((buffer-name (format "*testing snippet: %s*" (yas/template-name yas/current-template))))
              (set-buffer (switch-to-buffer buffer-name))
              (erase-buffer)
              (setq buffer-undo-list nil)
-             (funcall test-mode)
-             (yas/expand-snippet (yas/template-content template)
+             (condition-case nil (funcall test-mode) (error nil))
+             (yas/expand-snippet (yas/template-content yas/current-template)
                                  (point-min)
                                  (point-max)
-                                 (yas/template-expand-env template))
+                                 (yas/template-expand-env yas/current-template))
              (when (and debug
                         (require 'yasnippet-debug nil t))
                (add-hook 'post-command-hook 'yas/debug-snippet-vars 't 'local))))
           (t
            (message "[yas] Cannot test snippet for unknown major mode")))))
+
+(defun yas/template-fine-group (template)
+  (car (last (or (yas/template-group template)
+                 (yas/template-perm-group template)))))
 
 (defun yas/describe-tables (&optional choose)
   "Display snippets for each table."
@@ -2567,68 +2586,93 @@ With optional prefix argument KILL quit the window and buffer."
          (original-buffer (current-buffer))
          (continue t)
          (yas/condition-cache-timestamp (current-time)))
-    (with-current-buffer buffer 
-      (let ((buffer-read-only nil))
-        (erase-buffer)
-        (cond ((not by-name-hash)
-               (insert "YASnippet tables by UUID: \n")
-               (while (and table-lists
-                           continue)
-                 (dolist (table (car table-lists))
-                   (insert (format "\nSnippet table `%s'"
-                                   (yas/table-name table)))
-                   (if (yas/table-parents table)
-                       (insert (format " parents: %s\n"
-                                       (mapcar #'yas/table-name
-                                               (yas/table-parents table))))
-                     (insert "\n"))
-                   (let ((always (cons "(a)" (list)))
-                         (active (cons "(y)" (list)))
-                         (sleeping (cons "(n)" (list))))
-                     (maphash #'(lambda (k v)
-                                  (let ((condition (yas/template-condition v)))
-                                    (if condition
-                                      (with-current-buffer original-buffer
-                                        (if (yas/eval-condition condition)
-                                            (push v (cdr active))
-                                          (push v (cdr sleeping))))
-                                      (push v (cdr always)))))
-                              (yas/table-uidhash table))
-                     (dolist (type-and-templates (list always active sleeping))
-                       (dolist (p (cdr type-and-templates))
-                         (let ((name (yas/template-name p)))
-                           (insert (propertize (format "%s \\\\snippet `%s'" (car type-and-templates) name) 'yasnippet p))
-                           (insert (make-string (max (- 50 (length name))
-                                                     1) ? ))
-                           (when (yas/template-key p)
-                             (insert (format "key \"%s\" " (yas/template-key p))))
-                           (when (yas/template-keybinding p)
-                             (insert (format "bound to %s " (key-description (yas/template-keybinding p)))))
-                           (insert "\n"))))))
-                 (setq table-lists (cdr table-lists))
-                 (when table-lists
-                   (yas/create-snippet-xrefs)
-                   (display-buffer buffer)
-                   (setq continue (and choose (y-or-n-p "Show also non-active tables? ")))))
-               (yas/create-snippet-xrefs)
-               (goto-char (point-min))
-               (help-mode))
-              (t
-               (insert "\n\nYASnippet tables by NAMEHASH: \n")
-               (dolist (table (append active-tables remain-tables))
-                 (insert (format "\nSnippet table `%s':\n\n" (yas/table-name table)))
-                 (let ((keys))
-                   (maphash #'(lambda (k v)
-                                (push k keys))
-                            (yas/table-hash table))
-                   (dolist (key keys)
-                     (insert (format "   key %s maps snippets: %s\n" key
-                                     (let ((names))
-                                       (maphash #'(lambda (k v)
-                                                    (push k names))
-                                                (gethash key (yas/table-hash table)))
-                                       names))))))))))
+    (with-current-buffer buffer
+      (setq buffer-read-only nil)
+      (erase-buffer)
+      (cond ((not by-name-hash)
+             (insert "YASnippet tables: \n")
+             (while (and table-lists
+                         continue)
+               (dolist (table (car table-lists))
+                 (yas/describe-pretty-table table))
+               (setq table-lists (cdr table-lists))
+               (when table-lists
+                 (yas/create-snippet-xrefs)
+                 (display-buffer buffer)
+                 (setq continue (and choose (y-or-n-p "Show also non-active tables? ")))))
+             (yas/create-snippet-xrefs)
+             (help-mode)
+             (goto-char 1))
+            (t
+             (insert "\n\nYASnippet tables by NAMEHASH: \n")
+             (dolist (table (append active-tables remain-tables))
+               (insert (format "\nSnippet table `%s':\n\n" (yas/table-name table)))
+               (let ((keys))
+                 (maphash #'(lambda (k v)
+                              (push k keys))
+                          (yas/table-hash table))
+                 (dolist (key keys)
+                   (insert (format "   key %s maps snippets: %s\n" key
+                                   (let ((names))
+                                     (maphash #'(lambda (k v)
+                                                  (push k names))
+                                              (gethash key (yas/table-hash table)))
+                                     names))))))))
+      (goto-char 1)
+      (setq buffer-read-only t))
     (display-buffer buffer)))
+
+(defun yas/describe-pretty-table (table)
+  (insert (format "\nSnippet table `%s'"
+                  (yas/table-name table)))
+  (if (yas/table-parents table)
+      (insert (format " parents: %s\n"
+                      (mapcar #'yas/table-name
+                              (yas/table-parents table))))
+    (insert "\n"))
+  (insert (make-string 100 ?-) "\n")
+  (insert "group                   state name                                    key             binding\n")
+  (let ((groups-alist (list))
+        group)
+    (maphash #'(lambda (k v)
+                 (setq group (or (yas/template-fine-group v)
+                                 "(top level)"))
+                 (when (yas/template-name v)
+                   
+                   (aput 'groups-alist group (cons v (aget groups-alist group)))))
+             (yas/table-uuidhash table))
+    (dolist (group-and-templates groups-alist)
+      (when (rest groups-alist)
+        (setq group (truncate-string-to-width (car group-and-templates) 25 0 ?  "..."))
+        (insert (make-string 100 ?-) "\n")
+        (dolist (p (cdr group-and-templates))
+          (let ((name (truncate-string-to-width (propertize (format "\\\\snippet `%s'" (yas/template-name p))
+                                                            'yasnippet p)
+                                                50 0 ? "..."))
+                (group (prog1 group 
+                         (setq group (make-string (length group) ? ))))
+                (condition-string (let ((condition (yas/template-condition p)))
+                                    (if condition
+                                        (with-current-buffer original-buffer
+                                          (if (yas/eval-condition condition)
+                                              "(y)"
+                                            "(s)"))
+                                      "(a)"))))
+            (insert group " ")
+            (insert condition-string " ")
+            (insert name 
+                    (if (string-match "\\.\\.\\.$" name)
+                        "'"
+                      " ")
+                    " ")
+            (insert (truncate-string-to-width (or (yas/template-key p) "")
+                                              15 0 ?  "...") " ")
+            (insert (truncate-string-to-width (key-description (yas/template-keybinding p))
+                                              15 0 ?  "...") " ")
+            (insert "\n")))))))
+
+
+
 
 
 ;;; User convenience functions, for using in snippet definitions
@@ -2681,12 +2725,6 @@ Otherwise throw exception."
   (when (and yas/moving-away-p (notany #'(lambda (pos) (string= pos yas/text)) possibilities))
     (yas/throw (format "[yas] field only allows %s" possibilities))))
 
-(defun yas/ephemeral-field (number)
-  "Automatically exit snippet when something is type in field NUMBER.
-
-To be used as a primary field transformation."
-  (when yas/modified-p (yas/exit-snippet (first (yas/snippets-at-point))) (yas/field-value number)))
-
 (defun yas/field-value (number)
   "A primary field transformation..."
   (let* ((snippet (car (yas/snippets-at-point)))
@@ -2694,6 +2732,18 @@ To be used as a primary field transformation."
                      (yas/snippet-find-field snippet number))))
     (when field
       (yas/field-text-for-display field))))
+
+(defun yas/text ()
+  "Return `yas/text' if that exists and is non-empty, else nil."
+  (if (and yas/text
+           (not (string= "" yas/text)))
+      yas/text))
+
+;; (defun yas/selected-text ()
+;;   "Return `yas/selected-text' if that exists and is non-empty, else nil."
+;;   (if (and yas/selected-text
+;;            (not (string= "" yas/selected-text)))
+;;       yas/selected-text))
 
 (defun yas/get-field-once (number &optional transform-fn)
   (unless yas/modified-p
@@ -2707,6 +2757,12 @@ To be used as a primary field transformation."
 
 (defun yas/inside-string ()
   (equal 'font-lock-string-face (get-char-property (1- (point)) 'face)))
+
+(defun yas/unimplemented ()
+  (if yas/current-template
+      (if (y-or-n-p "This snippet is unimplemented. Visit the snippet definition? ")
+          (yas/visit-snippet-file-1 yas/current-template))
+    (message "No implementation.")))
 
 
 ;;; Snippet expansion and field management
@@ -2784,7 +2840,8 @@ for this field, apply it. Otherwise, returned nil."
          (transformed (and transform
                            (save-excursion
                              (goto-char start-point)
-                             (yas/eval-lisp transform)))))
+                             (let ((ret (yas/eval-lisp transform)))
+                               (or ret ""))))))
     transformed))
 
 (defsubst yas/replace-all (from to &optional text)
@@ -2806,8 +2863,7 @@ With optional string TEXT do it in that string."
   "Sort the fields of SNIPPET in navigation order."
   (setf (yas/snippet-fields snippet)
         (sort (yas/snippet-fields snippet)
-              '(lambda (field1 field2)
-                 (yas/snippet-field-compare field1 field2)))))
+              #'yas/snippet-field-compare)))
 
 (defun yas/snippet-field-compare (field1 field2)
   "Compare two fields. The field with a number is sorted first.
@@ -2817,10 +2873,11 @@ have, compare through the field's start point"
         (n2 (yas/field-number field2)))
     (if n1
         (if n2
-            (< n1 n2)
-          t)
+            (or (zerop n2) (and (not (zerop n1))
+                                (< n1 n2)))
+          (not (zerop n1)))
       (if n2
-          nil
+          (zerop n2)
         (< (yas/field-start field1)
            (yas/field-start field2))))))
 
@@ -2900,12 +2957,17 @@ Also create some protection overlays"
   (setf (yas/snippet-active-field snippet) field)
   (yas/place-overlays snippet field)
   (overlay-put yas/active-field-overlay 'yas/field field)
-  ;; primary field transform: first call to snippet transform
-  (unless (yas/field-modified-p field)
-    (if (yas/field-update-display field snippet)
-        (let ((inhibit-modification-hooks t))
-          (yas/update-mirrors snippet))
-      (setf (yas/field-modified-p field) nil))))
+  (let ((number (yas/field-number field)))
+    (if (and number (zerop number))
+        (progn
+          (set-mark (yas/field-end field))
+          (setf (yas/snippet-force-exit snippet) t))
+      ;; primary field transform: first call to snippet transform
+      (unless (yas/field-modified-p field)
+        (if (yas/field-update-display field snippet)
+            (let ((inhibit-modification-hooks t))
+              (yas/update-mirrors snippet))
+          (setf (yas/field-modified-p field) nil))))))
 
 (defun yas/prev-field ()
   "Navigate to prev field.  If there's none, exit the snippet."
@@ -3131,7 +3193,7 @@ Otherwise deletes a character normally by calling `delete-char'."
   ;; fields as modified, too. If the childen have mirrors-in-fields
   ;; this prevents them from updating erroneously (we're skipping and
   ;; deleting!).
-  ;; 
+  ;;
   (yas/mark-this-and-children-modified field)
   (delete-region (yas/field-start field) (yas/field-end field)))
 
@@ -3174,10 +3236,11 @@ Only clears the field if it hasn't been modified and it point it
 at field start. This hook doesn't do anything if an undo is in
 progress."
   (unless (yas/undo-in-progress)
-    (let ((field (overlay-get yas/active-field-overlay 'yas/field)))
+    (let* ((field (overlay-get yas/active-field-overlay 'yas/field))
+           (number (and field (yas/field-number field)))
+           (snippet (overlay-get yas/active-field-overlay 'yas/snippet)))
       (cond (after?
              (yas/advance-end-maybe field (overlay-end overlay))
-;;; primary field transform: normal calls to expression
              (let ((saved-point (point)))
                (yas/field-update-display field (car (yas/snippets-at-point)))
                (goto-char saved-point))
@@ -3294,7 +3357,7 @@ considered when expanding the snippet."
 
   ;; If a region is active, set `yas/selected-text'
   (setq yas/selected-text
-        (when mark-active
+        (when (region-active-p)
           (prog1 (buffer-substring-no-properties (region-beginning)
                                                  (region-end))
             (unless start (setq start (region-beginning))
@@ -3318,7 +3381,7 @@ considered when expanding the snippet."
 
     (cond ((listp content)
            ;; x) This is a snippet-command
-           ;; 
+           ;;
            (yas/eval-lisp-no-saves content))
           (t
            ;; x) This is a snippet-snippet :-)
@@ -3385,8 +3448,9 @@ considered when expanding the snippet."
            (let ((first-field (car (yas/snippet-fields snippet))))
              (when first-field
                (sit-for 0) ;; fix issue 125
-               (yas/move-to-field snippet first-field))))
-          (message "[yas] snippet expanded."))))
+               (yas/move-to-field snippet first-field)))
+           (message "[yas] snippet expanded.")
+           t))))
 
 (defun yas/take-care-of-redo (beg end snippet)
   "Commits SNIPPET, which in turn pushes an undo action for
@@ -3649,18 +3713,16 @@ Meant to be called in a narrowed buffer, does various passes"
 (defun yas/indent-according-to-mode (snippet-markers)
   "Indent current line according to mode, preserving
 SNIPPET-MARKERS."
-  ;; XXX: Here seems to be the indent problem:
+  ;;; Apropos indenting problems....
   ;;
-  ;; `indent-according-to-mode' uses whatever
-  ;; `indent-line-function' is available. Some
-  ;; implementations of these functions delete text
-  ;; before they insert. If there happens to be a marker
-  ;; just after the text being deleted, the insertion
-  ;; actually happens  after the marker, which misplaces
-  ;; it.
+  ;; `indent-according-to-mode' uses whatever `indent-line-function'
+  ;; is available. Some implementations of these functions delete text
+  ;; before they insert. If there happens to be a marker just after
+  ;; the text being deleted, the insertion actually happens after the
+  ;; marker, which misplaces it.
   ;;
-  ;; This would also happen if we had used overlays with
-  ;; the `front-advance' property set to nil.
+  ;; This would also happen if we had used overlays with the
+  ;; `front-advance' property set to nil.
   ;;
   ;; This is why I have these `trouble-markers', they are the ones at
   ;; they are the ones at the first non-whitespace char at the line
@@ -3815,7 +3877,8 @@ When multiple expressions are found, only the last one counts."
                                    (not (save-match-data
                                           (eq (string-match "$[ \t\n]*("
                                                             (match-string-no-properties 2)) 0)))
-                                   (not (and number (zerop number)))
+                                   ;; allow ${0: some exit text}
+                                   ;; (not (and number (zerop number)))
                                    (yas/make-field number
                                                    (yas/make-marker (match-beginning 2))
                                                    (yas/make-marker (1- real-match-end-0))
@@ -3835,7 +3898,7 @@ When multiple expressions are found, only the last one counts."
   ;; if we entered from a parent field, now search for the
   ;; `yas/multi-dollar-lisp-expression-regexp'. THis is used for
   ;; primary field transformations
-  ;; 
+  ;;
   (when parent-field
     (save-excursion
       (while (re-search-forward yas/multi-dollar-lisp-expression-regexp nil t)
@@ -3848,7 +3911,7 @@ When multiple expressions are found, only the last one counts."
           ;; 2. we really make sure we have either two '$' or some
           ;; text and a '$' after the colon ':'. This is a FIXME: work
           ;; my regular expressions and end these ugly hacks.
-          ;; 
+          ;;
           (when (and real-match-end-1
                      (not (member (cons (match-beginning 0)
                                         real-match-end-1)
@@ -3880,13 +3943,13 @@ When multiple expressions are found, only the last one counts."
                                     (buffer-substring-no-properties (match-beginning 2)
                                                                     (1- real-match-end-0))))))))
       (when brand-new-mirror
-        (push brand-new-mirror 
+        (push brand-new-mirror
               (yas/field-mirrors field))
         (yas/calculate-mirrors-in-fields snippet brand-new-mirror)
         (push (cons (match-beginning 0) real-match-end-0) yas/dollar-regions)))))
 
 (defun yas/simple-mirror-parse-create (snippet)
-  "Parse the simple \"$n\" mirrors and the exit-marker."
+  "Parse the simple \"$n\" fields/mirrors/exitmarkers."
   (while (re-search-forward yas/simple-mirror-regexp nil t)
     (let ((number (string-to-number (match-string-no-properties 1))))
       (cond ((zerop number)
@@ -3912,7 +3975,7 @@ When multiple expressions are found, only the last one counts."
                                             (yas/make-marker (match-beginning 0))
                                             (yas/make-marker (match-beginning 0))
                                             nil)))
-                     (push brand-new-mirror 
+                     (push brand-new-mirror
                            (yas/field-mirrors field))
                      (yas/calculate-mirrors-in-fields snippet brand-new-mirror))
                  (push (yas/make-field number
@@ -3945,11 +4008,11 @@ When multiple expressions are found, only the last one counts."
           (let ((inhibit-modification-hooks t)
                 (mirror-parent-field (yas/mirror-parent-field mirror)))
             ;; updatte this mirror
-            ;; 
+            ;;
             (yas/mirror-update-display mirror field)
             ;; for mirrors-in-fields: schedule a possible
             ;; parent field for reupdting later on
-            ;; 
+            ;;
             (when mirror-parent-field
               (add-to-list 'fields mirror-parent-field 'append #'eq))
             ;; `yas/place-overlays' is needed if the active field and
@@ -4051,16 +4114,17 @@ that the rest of `yas/post-command-handler' runs.")
 (put 'yas/expand  'function-documentation '(yas/expand-from-trigger-key-doc))
 (defun yas/expand-from-trigger-key-doc ()
   "A doc synthethizer for `yas/expand-from-trigger-key-doc'."
-  (let ((fallback-description (cond ((eq yas/fallback-behavior 'call-other-command)
-                                     (let* ((yas/minor-mode nil)
-                                            (fallback (key-binding (read-kbd-macro yas/trigger-key))))
-                                       (or (and fallback
-                                                (format " call command `%s'." (pp-to-string fallback)))
-                                           " do nothing.")))
-                           ((eq yas/fallback-behavior 'return-nil)
-                            ", do nothing.")
-                           (t
-                            ", defer to `yas/fallback-behaviour' :-)"))))
+  (let ((fallback-description
+         (cond ((eq yas/fallback-behavior 'call-other-command)
+                (let* ((yas/minor-mode nil)
+                       (fallback (key-binding (read-kbd-macro yas/trigger-key))))
+                  (or (and fallback
+                           (format " call command `%s'." (pp-to-string fallback)))
+                      " do nothing.")))
+               ((eq yas/fallback-behavior 'return-nil)
+                ", do nothing.")
+               (t
+                ", defer to `yas/fallback-behaviour' :-)"))))
     (concat "Expand a snippet before point. If no snippet
 expansion is possible,"
             fallback-description
@@ -4110,12 +4174,23 @@ object satisfying `yas/field-p' to restrict the expansion to.")))
 (defun yas/create-snippet-xrefs ()
   (save-excursion
     (goto-char (point-min))
-    (while (search-forward-regexp "\\\\\\\\snippet[ \s\t]+\\(`[^']+'\\)" nil t)
+    (while (search-forward-regexp "\\\\\\\\snippet[ \s\t]+`\\([^']+\\)'" nil t)
       (let ((template (get-text-property (match-beginning 1)
                                          'yasnippet)))
         (when template
           (help-xref-button 1 'help-snippet-def template)
+          (kill-region (match-end 1) (match-end 0))
           (kill-region (match-beginning 0) (match-beginning 1)))))))
+
+(defun yas/expand-uuid (mode-symbol uuid &optional start end expand-env)
+  "Expand a snippet registered in MODE-SYMBOL's table with UUID.
+
+Remaining args as in `yas/expand-snippet'."
+  (let* ((table (gethash mode-symbol yas/tables))
+         (yas/current-template (and table
+                                    (gethash uuid (yas/table-uuidhash table)))))
+    (when yas/current-template
+      (yas/expand-snippet (yas/template-content yas/current-template)))))
 
 
 ;;; Some hacks:
@@ -4147,7 +4222,7 @@ and return the directory.  Return nil if not found."
           (prev-file file)
           ;; `user' is not initialized outside the loop because
           ;; `file' may not exist, so we may have to walk up part of the
-          ;; hierarchy before we find the "initial UID".
+          ;; hierarchy before we find the "initial UUID".
           (user nil)
           try)
       (while (not (or root
